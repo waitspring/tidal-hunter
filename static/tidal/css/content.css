@@ -1,0 +1,105 @@
+/* content 页面样式
+ *************************************************************************************************/
+
+section.my-content {
+    margin: 0px;
+    padding: 0px;
+    margin-left: 200px;
+    margin-top: 70px;
+}
+
+section .my-panel {
+    margin-right: 20px;
+}
+
+section .my-panel-body {
+    margin: 30px;
+    padding: 0px;
+}
+
+a.my-edit-link {
+    padding: 5px 12px;
+    border: 1px solid #BBB;
+    background-color: #FFF;
+    color: #656765;
+    transition: background-color 200ms ease;
+}
+
+a.my-edit-link:hover {
+    border: 1px solid #91989F;
+    background-color: #91989F;
+    color: #FFF;
+}
+
+a.my-look-link {
+    padding: 5px 12px;
+    border: 1px solid #BBB;
+    background-color: #FFF;
+    color: #656765;
+    transition: background-color 200ms ease;
+}
+
+a.my-look-link:hover {
+    border: 1px solid #947A6D;
+    background-color: #947A6D;
+    color: #FFF;
+}
+
+a.my-del-link {
+    padding: 5px 12px;
+    border: 1px solid #BBB;
+    background-color: #FFF;
+    color: #656765;
+    transition: background-color 200ms ease;
+}
+
+a.my-del-link:hover {
+    border: 1px solid #3A3226;
+    background-color: #3A3226;
+    color: #FFF;
+}
+
+a.my-update-link {
+    padding: 5px 12px;
+    border: 1px solid #BBB;
+    background-color: #FFF;
+    color: #656765;
+    text-decoration: none;
+    transition: background-color 200ms ease;
+}
+
+a.my-update-link:hover {
+    border: 1px solid #622954;
+    background-color: #622954;
+    color: #FFF;
+}
+
+.my-input {
+    width: 500px;
+}
+
+.my-label-tag {
+    color: #777;
+    font-size: 13px;
+    height: 40px;
+    line-height: 50px;
+}
+
+.my-submit {
+    padding: 5px 12px;
+    border: 1px solid #91989F;
+    background-color: #91989F;
+    color: #FFF;
+}
+
+.my-cancel-submit {
+    padding: 5px 12px;
+    border: 1px solid #3A3226;
+    background-color: #3A3226;
+    color: #FFF;
+}
+
+.my-title-label {
+    color: #656765;
+    margin-top: 30px;
+}

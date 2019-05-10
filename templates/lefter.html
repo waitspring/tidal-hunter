@@ -1,0 +1,82 @@
+<script type="text/javascript">
+    function show_nav (id, icon)
+    {
+        $('#' + id).slideToggle(300);
+
+        var icon = document.getElementById(icon);
+
+        if (icon.getAttribute("class") === "fa fa-angle-double-left my-angle-icon") {
+            icon.setAttribute("class", "fa fa-angle-double-down my-angle-icon");
+        } else {
+            icon.setAttribute("class", "fa fa-angle-double-left my-angle-icon");
+        }
+    }
+</script>
+
+<aside class="my-aside">
+    <div style="padding: 15px">
+        <!-- every user use a same portrait picture in directory /static/tidal/users/ ---------------------->
+        <img class="my-user-portrait" src="/static/tidal/users/demo.jpeg">
+        <span>&nbsp;&nbsp;</span>
+        <div class="my-user-info">
+            <a href="/" style="text-decoration: none">
+                <span class="my-user-name">{{ user.nickname }}</span>
+            </a>
+            <span class="my-user-email">{{ user.email }}</span>
+        </div>
+    </div>
+    <!-- make the navigation like a tree, here we use a javascript function named show_nav( ) -------------->
+    <ul class="my-nav">
+        <!-- engineering control part ---------------------------------------------------------------------->
+        <li class="my-bav-ctrl" onclick="show_nav('nav-menu-engineering', 'nav-menu-engineering-icon')">
+            <a class="my-nav-ctrl-link">
+                <i class="fa fa-product-hunt fa-icon" aria-hidden="true"></i>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span>项目管理</span>
+                <i id="nav-menu-engineering-icon" class="fa fa-angle-double-left my-angle-icon"></i>
+            </a>
+        </li>
+        <!-- another list as son --------------------------------------------------------------------------->
+        <ul id="nav-menu-engineering" class="my-nav-menu">
+            <li class="my-nav-menu-item">
+                <a class="my-nav-menu-item-link" href="/">
+                    <i class="fa fa-sitemap fa-icon" aria-hidden="true"></i>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <span>产品档案</span>
+                </a>
+            </li>
+            <li class="my-nav-menu-item">
+                <a class="my-nav-menu-item-link" href="/">
+                    <i class="fa fa-th-large fa-icon" aria-hidden="true"></i>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <span>工程档案</span>
+                </a>
+            </li>
+        </ul>
+        <!-- user control part ----------------------------------------------------------------------------->
+        <li class="my-nav-ctrl" onclick="show_nav('nav-menu-user', 'nav-menu-user-icon')">
+            <a class="my-nav-ctrl-link">
+                <i class="fa fa-user-circle fa-icon" aria-hidden="true"></i>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span>用户管理</span>
+                <i id="nav-menu-user-icon" class="fa fa-angle-double-left my-angle-icon"></i>
+            </a>
+        </li>
+        <ul id="nav-menu-user" class="my-nav-menu">
+            <li class="my-nav-menu-item">
+                <a class="my-nav-menu-item-link" href="/">
+                    <i class="fa fa-user-plus fa-icon" aria-hidden="true"></i>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <span>人员管理</span>
+                </a>
+            </li>
+            <li class="my-nav-menu-item">
+                <a class="my-nav-menu-item-link" href="/">
+                    <i class="fa fa-users fa-icon" aria-hidden="true"></i>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <span>部门管理</span>
+                </a>
+            </li>
+        </ul>
+    </ul>
+</aside>

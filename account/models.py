@@ -22,15 +22,16 @@ class EmployeeManager(BaseUserManager):
     """
     EmployeeManager class is the ancillary management tool for Employee class
     """
-    def create_employee(self, username, password=None):
-        employee = self.model(username=username)
+    def create_employee(self, username, nickname, password=None):
+        employee = self.model(username=username, nickname=nickname)
         employee.set_password(password)
         employee.save(using=self._db)
         return employee
 
-    def create_superuser(self, username, password):
-        superuser = self.create_employee(username=username, password=password)
+    def create_superuser(self, username, nickname, password):
+        superuser = self.create_employee(username=username, nickname=nickname, password=password)
         superuser.is_active = True
+        superuser.is_staff = True
         superuser.is_superuser = True
         superuser.save(using=self._db)
         return superuser
@@ -89,13 +90,16 @@ class Employee(AbstractBaseUser):
     )
 
     is_superuser = BooleanField(lazy("超级权限"), default=False)
-    is_active = BooleanField(lazy("用户状态"), default=False)
+    is_staff = BooleanField(lazy("后台权限"), default=False)
+    is_active = BooleanField(lazy("用户状态"), default=True)
     add_date = DateField(lazy("入职日期"), default=timezone.now, blank=True, null=True)
     timestamps = DateTimeField(lazy("时间戳"), default=timezone.now)
     objects = EmployeeManager()
 
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = [
+        "nickname"
+    ]
 
     def get_short_name(self):
         return self.username
