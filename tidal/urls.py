@@ -10,11 +10,13 @@ distribute them into our applications
 
 
 from django.conf.urls import include, url
+from board.views import board
 
 
 # ===========================================================================================================
 # path config
 # ===========================================================================================================
 urlpatterns = [
-    url(r"^accounts/", include("account.urls"))
+    url(r"^accounts/", include("account.urls")),
+    url(r"^$", board, name="board")
 ]
