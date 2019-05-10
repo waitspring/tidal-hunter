@@ -6,6 +6,7 @@ account.forms
 """
 
 
+import re
 from django.forms import *
 from django.contrib import auth
 from .models import Employee, Department
@@ -14,7 +15,7 @@ from .models import Employee, Department
 # =====================================================================================================================
 # login / logout form part
 # =====================================================================================================================
-class LoginForm(forms.Form):
+class LoginForm(Form):
     """
     connect the account.views.login, we need to construct two fields (username and password) in this form
     """
@@ -56,3 +57,112 @@ class LoginForm(forms.Form):
         every function
         """
         return self.auth_cache
+
+
+# =====================================================================================================================
+# users (employees too) controlling form part
+# =====================================================================================================================
+class EmployeeAddForm(ModelForm):
+    """
+    this form reuse the model Employee, and we use this form class to add user account
+    """
+    class Meta:
+        model = Employee
+        exclude = (
+            "id", "is_superuser", "is_staff", "timestamps", "last_login"
+        )
+        widgets = {
+            "username": TextInput(
+                attrs={"class": "form-control my-input", "placeholder": "cannot be updated after submission"}
+            ),
+            "password": PasswordInput(attrs={"class": "form-control my-input"}),
+            "nickname": TextInput(
+                attrs={"class": "form-control my-input", "placeholder": "cannot be updated after submission"}
+            ),
+            "email": EmailInput(attrs={"class": "form-control my-input"}),
+            "phone": TextInput(attrs={"class": "form-control my-input"}),
+            "sequence": Select(attrs={"class": "form-control my-input"}),
+            "grade": Select(attrs={"class": "form-control my-input"}),
+            "education": Select(attrs={"class": "form-control my-input"}),
+            "department": SelectMultiple(attrs={"class": "form-control my-input"}),
+            "is_active": Select(choices=((True, "正常"), (False, "冻结")), attrs={"class": "form-control my-input"}),
+            "add_date": DateInput(attrs={"class": "form-control my-input"})
+        }
+
+    def clean_username(self):
+        """
+        because of the fields define order in account.models.Employee model , we only cloud get username field value in
+        this check function by self.cleaned_date
+        """
+        username = self.cleaned_data.get("username")
+        try:
+            check = Employee.objects.get(username=username)
+        except:
+            check = None
+        if check:
+            raise ValidationError("该用户名称已经被占用")
+        return username
+
+    def clean_nickname(self):
+        """
+        like the clean_username( ), this function can get both username and nickname fields by self.cleaned_data
+        """
+        nickname = self.cleaned_data.get("nickname")
+        try:
+            check = Employee.objects.get(username=nickname)
+        except:
+            check = None
+        if check:
+            raise ValidationError("该同事已经具有一个账号, 请勿重复建立")
+        return nickname
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get("phone")
+        if phone:
+            if len(phone) != 11:
+                raise ValidationError("手机号码格式错误")
+            else:
+                try:
+                    int(phone)
+                except ValueError:
+                    raise ValidationError("手机号码格式错误")
+                if not re.match(r"^1[3456789].*", phone):
+                    raise ValidationError("手机号码格式错误")
+        return phone
+
+
+class EmployeeEditForm(ModelForm):
+    """
+    we use this form class to edit user account that had been created
+    """
+    class Meta:
+        model = Employee
+        exclude = (
+            "id", "password", "is_superuser", "is_staff", "timestamps", "last_login"
+        )
+        widgets = {
+            "username": TextInput(attrs={"class": "form-control my-input", "readonly": "readonly"}),
+            "nickname": TextInput(attrs={"class": "form-control my-input", "readonly": "readonly"}),
+            "email": EmailInput(attrs={"class": "form-control my-input"}),
+            "phone": TextInput(attrs={"class": "form-control my-input"}),
+            "sequence": Select(attrs={"class": "form-control my-input"}),
+            "grade": Select(attrs={"class": "form-control my-input"}),
+            "education": Select(attrs={"class": "form-control my-input"}),
+            "department": SelectMultiple(attrs={"class": "form-control my-input"}),
+            "is_active": Select(choices=((True, "正常"), (False, "冻结")), attrs={"class": "form-control my-input"}),
+            "add_date": DateInput(attrs={"class": "form-control my-input"})
+        }
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get("phone")
+        if phone:
+            if len(phone) != 11:
+                raise ValidationError("手机号码格式错误")
+            else:
+                try:
+                    int(phone)
+                except ValueError:
+                    raise ValidationError("手机号码格式错误")
+                if not re.match(r"^1[3456789].*", phone):
+                    raise ValidationError("手机号码格式错误")
+        return phone

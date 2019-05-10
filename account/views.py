@@ -9,7 +9,8 @@ account.views
 from django.shortcuts import HttpResponseRedirect, render, reverse
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm
+from django.http import HttpResponseBadRequest
+from .forms import LoginForm, EmployeeAddForm, EmployeeEditForm
 from .models import Employee, Department
 
 
@@ -59,3 +60,63 @@ def logout(request):
     """
     auth.logout(request)
     return HttpResponseRedirect(request.META["HTTP_REFERER"])
+
+
+# =====================================================================================================================
+# employee views part
+# =====================================================================================================================
+@login_required()
+def employee(request):
+    """
+    we put all employee views input this function, it means that tidal function will just use one request path to
+    control employee, and divide every func by some different parameters, like:
+
+        * /path/to/employees/?name=<employee_id>           the readonly page of employee's information show
+        * /path/to/employees/?edit=<employee_id>           the edit page of a existing employee
+        * /path/to/employees/?add=True                     the adding edit page of a not existing employee
+        * /path/to/employees/?delete=<employee_id>         delete one existing user and redirect page to users list
+        * /path/to/employees/                              the page showing all employees by list
+    """
+    if request.method == "GET":
+        if request.GET.get("name") != None:
+            pass
+        elif request.GET.get("edit") != None:
+            employee = Employee.objects.get(id=request.GET.get("edit"))
+            form = EmployeeEditForm(instance=employee)
+            context = {
+                "employee": employee,
+                "form": form
+            }
+            return render(request, "account/employee_edit.html", context)
+        elif request.GET.get("add") != None:
+            return render(request, "account/employee_edit.html", {"form": EmployeeAddForm})
+        elif request.GET.get("delete") != None:
+            pass
+        else:
+            pass
+    elif request.method == "POST":
+        if request.GET.get("edit") != None:
+            employee = Employee.objects.get(id=request.GET.get("edit"))
+            form = EmployeeEditForm(request.POST, instance=employee)
+            context = {
+                "employee": employee,
+                "form": form
+            }
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse("employee"))
+            else:
+                return render(request, "account/employee_edit.html", context)
+        elif request.GET.get("add") != None:
+            form = EmployeeAddForm(request.POST)
+            if form.is_valid():
+                employee = form.save(commit=False)
+                employee.set_password(form.cleaned_data.get("password"))
+                employee.save()
+                return HttpResponseRedirect(reverse("employee"))
+            else:
+                return render(request, "account/employee_edit.html", {"form": form})
+        else:
+            return HttpResponseBadRequest(content="POST 错误 *** 错误定位到 account.views.employee")
+    else:
+        return HttpResponseBadRequest(content="request 错误 *** 错误定位到 account.views.employee")

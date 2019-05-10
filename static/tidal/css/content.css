@@ -103,3 +103,9 @@ a.my-update-link:hover {
     color: #656765;
     margin-top: 30px;
 }
+
+.my-form-background {
+    padding: 20px 40px;
+    background-color: #EEE;
+    border-top: 5px solid #91989F;
+}
