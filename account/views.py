@@ -93,7 +93,8 @@ def employee(request):
         elif request.GET.get("delete") != None:
             pass
         else:
-            pass
+            employees = Employee.objects.all()
+            return render(request, "account/employees_list.html", {"employees": employees})
     elif request.method == "POST":
         if request.GET.get("edit") != None:
             employee = Employee.objects.get(id=request.GET.get("edit"))

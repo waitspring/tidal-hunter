@@ -89,6 +89,12 @@ class EmployeeAddForm(ModelForm):
             "add_date": DateInput(attrs={"class": "form-control my-input"})
         }
 
+    def clean_password(self):
+        password = self.cleaned_data.get("password")
+        if len(password) < 6:
+            raise ValidationError("请输入 6 位以上的有效密码")
+        return password
+
     def clean_username(self):
         """
         because of the fields define order in account.models.Employee model , we only cloud get username field value in

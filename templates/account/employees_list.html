@@ -1,0 +1,64 @@
+{% extends "myFire.html" %}
+{% block content %}
+<section class="my-content">
+    <div class="panel panel-default my-panel">
+        <div class="panel-body my-panel-body">
+            <h5>
+                <span>用户管理</span>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span>人员管理</span>
+                <span style="float: right">
+                    <a class="my-edit-link" href="{% url 'employee' %}?add=True">新增用户</a>
+                </span>
+            </h5><hr>
+            <!-- table showing part ---------------------------------------------------------------------------------->
+            <table id="employees_list" class="table table-bordered" style="width: 100%">
+                <thead style="user-select: none">
+                    <tr>
+                        <th style="text-align: center">员工姓名</th>
+                        <th style="text-align: center">工作岗位</th>
+                        <th style="text-align: center">工作职级</th>
+                        <th style="text-align: center">所在部门</th>
+                        <th style="text-align: center">联系电话</th>
+                        <th style="text-align: center">入职日期</th>
+                    </tr>
+                </thead>
+                <tbody align="center">
+                    {% for employee in employees %}
+                        {% if not employee.is_superuser %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'employee' %}?name={{ employee.id }}">{{ employee.nickname }}</a>
+                            </td>
+                            <td>{{ employee.sequence }}</td>
+                            <td>{{ employee.grade }}</td>
+                            <td>{{ employee.department }}</td>
+                            <td>{{ employee.phone }}</td>
+                            <td>{{ employee.add_date }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- bootstrap data table javascript --------------------------------------------------------------------->
+            <script type="text/javascript">
+                $("#employees_list").DataTable(
+                    {
+                        "info": false,
+                        "ordering": false,
+                        "lengthMenu": [[20, 40, 80], [20, 40, 80]],
+                        "language": {
+                            "lengthMenu": "每页显示&nbsp;&nbsp;&nbsp;_MENU_&nbsp;&nbsp;&nbsp;条记录",
+                            "zeroRecords": "没有匹配到任何结果",
+                            "infoEmpty": "没有数据",
+                            "search": "检索",
+                            "paginate": {"previous": "上一页", "next": "下一页"},
+                            "info": "当前显示第 _PAGE_ 页，共有 _PAGES_ 页"
+                        }
+                    }
+                )
+            </script>
+        </div>
+    </div>
+</section>
+{% endblock %}
