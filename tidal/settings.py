@@ -4,8 +4,8 @@
 """
 tidal.settings
 
-settings.py is the root configure file with tidal hunter engineering, and you can find some standards for
-this file's coding in:
+settings.py is the root configure file with tidal hunter engineering, and you can find some standards for this file's
+coding in:
 
     * https://docs.djangoproject.com/en/1.8/topics/settings/
     * https://docs.djangoproject.com/en/1.8/ref/settings/
@@ -29,9 +29,9 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = "account.Employee"
 
 
-# ===========================================================================================================
+# =====================================================================================================================
 # main static cases config
-# ===========================================================================================================
+# =====================================================================================================================
 INSTALLED_APPS = (
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -77,9 +77,9 @@ DATABASES = {
 }
 
 
-# ===========================================================================================================
+# =====================================================================================================================
 # other static cases config
-# ===========================================================================================================
+# =====================================================================================================================
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Asia/Shanghai"
 USE_I18N = True

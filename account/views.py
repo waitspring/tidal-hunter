@@ -13,13 +13,13 @@ from .forms import LoginForm
 from .models import Employee, Department
 
 
-# ===========================================================================================================
+# =====================================================================================================================
 # login / logout view part
-# ===========================================================================================================
+# =====================================================================================================================
 def login(request):
     """
-    we use the function django.contrib.auth.decorators.login_required as a decorator, if user have not login
-    tidal hunter, we need to redirect his page into login page, like this:
+    we use the function django.contrib.auth.decorators.login_required as a decorator, if user have not login our tidal
+    hunter, we need to redirect his page into login page, like this:
 
         * /accounts/login/?next=/
 

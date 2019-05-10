@@ -15,9 +15,9 @@ from django.db import models
 from django.db.models import *
 
 
-# ===========================================================================================================
+# =====================================================================================================================
 # tidal hunter user's model is Employee class
-# ===========================================================================================================
+# =====================================================================================================================
 class EmployeeManager(BaseUserManager):
     """
     EmployeeManager class is the ancillary management tool for Employee class
@@ -41,10 +41,10 @@ class Employee(AbstractBaseUser):
     """
     we will define a new user model named Employee as tidal hunter's accounts style
 
-    *********************************************************************************************************
+    *******************************************************************************************************************
 
-    please check the tidal.settings file and make sure we have made the AUTH_USER_MODEL = "account.Employee",
-    otherwise, system will use django.contrib.auth.models.User as tidal hunter's accounts style
+    please check the tidal.settings file and make sure we have made the AUTH_USER_MODEL = "account.Employee", otherwise
+    system will use django.contrib.auth.models.User as tidal hunter's accounts style
     """
     sequence_choices = (
         ("产品设计师", "产品设计师"),
@@ -111,9 +111,9 @@ class Employee(AbstractBaseUser):
         return self.nickname
 
 
-# ===========================================================================================================
+# =====================================================================================================================
 # department or group class part
-# ===========================================================================================================
+# =====================================================================================================================
 class Department(models.Model):
     """
     django do not support define ourselves' group class

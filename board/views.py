@@ -12,14 +12,14 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 
-# ===========================================================================================================
+# =====================================================================================================================
 # dash board views set
-# ===========================================================================================================
+# =====================================================================================================================
 @login_required()
 def board(request):
     """
-    in every view function, we need to construct some context tags so that we can use these in html5 pages,
-    but django has constructed a class value named requested for us, we can use it in html5 pages directly
+    in every view function, we need to construct some context tags so that we can use these in html5 pages, but django
+    has constructed a class value named requested for us, we can use it in html5 pages directly
 
     class request includes many attributes, like:
 
@@ -32,8 +32,7 @@ def board(request):
         * request.GET                  请求的 GET 相关参数
         * request.POST                 请求的 POST 相关参数
         * request.META                 请求头信息构成的字典
-        * request.user                 当前登录用户的信息, 使用 django.contrib.auth.models 数据模型或是我们自己定义
-                                       的数据模型
+        * request.user                 当前登录用户的信息, 使用 django.contrib.auth.models 数据模型或是我们自己定义的数据模型
 
     """
     return render(request, "board/board.html")

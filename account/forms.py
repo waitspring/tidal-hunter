@@ -11,9 +11,9 @@ from django.contrib import auth
 from .models import Employee, Department
 
 
-# ===========================================================================================================
+# =====================================================================================================================
 # login / logout form part
-# ===========================================================================================================
+# =====================================================================================================================
 class LoginForm(forms.Form):
     """
     connect the account.views.login, we need to construct two fields (username and password) in this form
@@ -36,11 +36,11 @@ class LoginForm(forms.Form):
 
     def clean_password(self):
         """
-        use the clean_<field_name> function to check field_name value, in this function, we will check the
-        username and the password too
+        use the clean_<field_name> function to check field_name value, in this function, we will check the username and
+        the password too
 
-        attention: we take auth.authenticate( ) for checking if inputting username and password is right, and
-        if checking result is True, the auth.authenticate( ) will return a user class, or return None
+        attention: we take auth.authenticate( ) for checking if inputting username and password is right, and if
+        checking result is True, the auth.authenticate( ) will return a user class, or return None
         """
         username = self.cleaned_data.get("username")
         password = self.cleaned_data.get("password")
@@ -52,7 +52,7 @@ class LoginForm(forms.Form):
 
     def get_auth_cache(self):
         """
-        this function will return user's account information as cache data for verifying the execution
-        permissions for every function
+        this function will return user's account information as cache data for verifying the execution permissions for
+        every function
         """
         return self.auth_cache
