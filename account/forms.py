@@ -64,7 +64,8 @@ class LoginForm(Form):
 # =====================================================================================================================
 class EmployeeAddForm(ModelForm):
     """
-    this form reuse the model Employee, and we use this form class to add user account
+    this form reuse the model Employee, and we use this form class to add user account, we have used some
+    clean_<fields> functions, and the clean( ) function would be called by EmployeeAddForm.is_valid( ) too
     """
     class Meta:
         model = Employee
@@ -75,7 +76,9 @@ class EmployeeAddForm(ModelForm):
             "username": TextInput(
                 attrs={"class": "form-control my-input", "placeholder": "cannot be updated after submission"}
             ),
-            "password": PasswordInput(attrs={"class": "form-control my-input"}),
+            "password": PasswordInput(
+                attrs={"class": "form-control my-input", "placeholder": "Password with more than 6 digits"}
+            ),
             "nickname": TextInput(
                 attrs={"class": "form-control my-input", "placeholder": "cannot be updated after submission"}
             ),
@@ -172,3 +175,44 @@ class EmployeeEditForm(ModelForm):
                 if not re.match(r"^1[3456789].*", phone):
                     raise ValidationError("手机号码格式错误")
         return phone
+
+
+class PasswordControlForm(Form):
+    """
+    this form is used to reset the password of the specified user directly
+
+    please attention that, this form is only used by super administrator
+    """
+    new_password = CharField(
+        label="新密码",
+        error_messages={"required": "请输入 6 位以上的有效密码"},
+        widget=PasswordInput(attrs={"class": "form-control", "style": "width: 350px"})
+    )
+    new_password_again = CharField(
+        label="确认新密码",
+        error_messages={"required": "请再次输入 6 位以上的有效密码"},
+        widget=PasswordInput(attrs={"class": "form-control", "style": "width: 350px"})
+    )
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(PasswordControlForm, self).__init__(*args, **kwargs)
+
+    def clean_new_password(self):
+        new_password = self.cleaned_data.get("new_password")
+        if len(new_password) < 6:
+            raise ValidationError("请输入 6 位以上的有效密码")
+        return new_password
+
+    def clean_new_password_again(self):
+        new_password = self.cleaned_data.get("new_password")
+        new_password_again = self.cleaned_data.get("new_password_again")
+        if new_password != None and new_password != new_password_again:
+            raise ValidationError("两次密码的输入不一致")
+        return new_password_again
+
+    def save(self, commit=True):
+        self.user.set_password(self.cleaned_data["new_password_again"])
+        if commit:
+            self.user.save()
+        return self.user

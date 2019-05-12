@@ -10,7 +10,7 @@ from django.shortcuts import HttpResponseRedirect, render, reverse
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
-from .forms import LoginForm, EmployeeAddForm, EmployeeEditForm
+from .forms import LoginForm, EmployeeAddForm, EmployeeEditForm, PasswordControlForm
 from .models import Employee, Department
 
 
@@ -79,7 +79,8 @@ def employee(request):
     """
     if request.method == "GET":
         if request.GET.get("name") != None:
-            pass
+            employee = Employee.objects.get(id=request.GET.get("name"))
+            return render(request, "account/employee.html", {"employee": employee})
         elif request.GET.get("edit") != None:
             employee = Employee.objects.get(id=request.GET.get("edit"))
             form = EmployeeEditForm(instance=employee)
@@ -92,6 +93,14 @@ def employee(request):
             return render(request, "account/employee_edit.html", {"form": EmployeeAddForm})
         elif request.GET.get("delete") != None:
             pass
+        elif request.GET.get("password") != None:
+            user = Employee.objects.get(id=request.GET.get("password"))
+            form = PasswordControlForm(user=user)
+            context = {
+                "employee": user,
+                "form": form
+            }
+            return render(request, "account/password_control.html", context)
         else:
             employees = Employee.objects.all()
             return render(request, "account/employees_list.html", {"employees": employees})
@@ -117,6 +126,18 @@ def employee(request):
                 return HttpResponseRedirect(reverse("employee"))
             else:
                 return render(request, "account/employee_edit.html", {"form": form})
+        elif request.GET.get("password") != None:
+            user = Employee.objects.get(id=request.GET.get("password"))
+            form = PasswordControlForm(data=request.POST, user=user)
+            context = {
+                "employee": user,
+                "form": form
+            }
+            if form.is_valid():
+                form.save()
+                return render(request, "account/employee.html", context)
+            else:
+                return render(request, "account/password_control.html", context)
         else:
             return HttpResponseBadRequest(content="POST 错误 *** 错误定位到 account.views.employee")
     else:

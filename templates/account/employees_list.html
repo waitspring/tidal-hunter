@@ -6,7 +6,7 @@
             <h5>
                 <span>用户管理</span>
                 <span>&nbsp;&nbsp;&nbsp;</span>
-                <span>人员管理</span>
+                <span style="color: #777">人员管理</span>
                 <span style="float: right">
                     <a class="my-edit-link" href="{% url 'employee' %}?add=True">新增用户</a>
                 </span>
@@ -30,11 +30,11 @@
                             <td>
                                 <a href="{% url 'employee' %}?name={{ employee.id }}">{{ employee.nickname }}</a>
                             </td>
-                            <td>{{ employee.sequence }}</td>
-                            <td>{{ employee.grade }}</td>
-                            <td>{{ employee.department }}</td>
-                            <td>{{ employee.phone }}</td>
-                            <td>{{ employee.add_date }}</td>
+                            <td>{% if employee.sequence %}{{ employee.sequence }}{% else %}--{% endif %}</td>
+                            <td>{% if employee.grade %}{{ employee.grade }}{% else %}--{% endif %}</td>
+                            <td>{% if employee.department %}{{ employee.department }}{% else %}--{% endif %}</td>
+                            <td>{% if employee.phone %}{{ employee.phone }}{% else %}--{% endif %}</td>
+                            <td>{% if employee.add_date %}{{ employee.add_date }}{% else %}--{% endif %}</td>
                         </tr>
                         {% endif %}
                     {% endfor %}
