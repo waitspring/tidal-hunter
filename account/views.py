@@ -92,7 +92,8 @@ def employee(request):
         elif request.GET.get("add") != None:
             return render(request, "account/employee_edit.html", {"form": EmployeeAddForm})
         elif request.GET.get("delete") != None:
-            pass   ####################################################################################################
+            Employee.objects.filter(id=request.GET.get("delete")).delete()
+            return HttpResponseRedirect(reverse("employee"))
         elif request.GET.get("password") != None:
             user = Employee.objects.get(id=request.GET.get("password"))
             form = PasswordControlForm(user=user)
@@ -115,7 +116,7 @@ def employee(request):
             }
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect(reverse("employee"))
+                return render(request, "account/employee.html", context)
             else:
                 return render(request, "account/employee_edit.html", context)
         elif request.GET.get("add") != None:
@@ -180,3 +181,10 @@ def myself(request):
             return HttpResponseBadRequest(content="POST 错误 *** 错误定位到 account.views.myself")
     else:
         return HttpResponseBadRequest(content="request 错误 *** 错误定位到 account.views.myself")
+
+
+# =====================================================================================================================
+# department controlling views
+# =====================================================================================================================
+def department(request):
+    pass
