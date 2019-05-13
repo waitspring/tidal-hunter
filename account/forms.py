@@ -278,3 +278,35 @@ class PasswordEditForm(Form):
         if commit:
             self.user.save()
         return self.user
+
+
+# =====================================================================================================================
+# department edit form, include adding and editing two parts
+# =====================================================================================================================
+class DepartmentForm(ModelForm):
+    """
+    a form class that combines new data or existing data for a department
+    """
+    class Meta:
+        model = Department
+        exclude = (
+            "id", "timestamps"
+        )
+        widgets = {
+            "self_name": TextInput(attrs={"class": "form-control my-input"}),
+            "full_name": TextInput(attrs={"class": "form-control my-input"}),
+            "father": Select(attrs={"class": "form-control my-input"}),
+            "header": Select(attrs={"class": "form-control my-input"}),
+            "add_date": DateInput(attrs={"class": "form-control my-input"})
+        }
+
+    def clean(self):
+        """
+        we need to check the foreign key father so that we could update our full_name field value, and we can save this
+        field value after noon
+        """
+        father = self.cleaned_data.get("father")
+        if father:
+            self.cleaned_data["full_name"] = father.full_name + '/' + self.cleaned_data["self_name"]
+        else:
+            self.cleaned_data["full_name"] = self.cleaned_data["self_name"]

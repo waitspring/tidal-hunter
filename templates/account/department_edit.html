@@ -1,0 +1,41 @@
+{% extends "myFire.html" %}
+{% block content %}
+<section class="my-content">
+    <div class="panel panel-default my-panel">
+        <div class="panel-body my-panel-body">
+            <h5>
+                <span>用户管理</span>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span style="color: #777">部门管理</span>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span style="color: #91989F">{{ department.full_name }}</span>
+            </h5><hr>
+            <!-- form edit part -------------------------------------------------------------------------------------->
+            <div class="my-form-background">
+                {% if department %}
+                {% else %}
+                <form action="{% url 'department' %}?add=True" method="post">
+                    {% csrf_token %}
+                    <div class="my-label-tag">部门名称</div>
+                    <div>{{ form.self_name }}</div>
+                    <div style="color: #FF0033">{{ form.self_name.errors }}</div>
+                    <div class="my-label-tag">上级组织</div>
+                    <div>{{ form.father }}</div>
+                    <div style="color: #FF0033">{{ form.father.errors }}</div>
+                    <div class="my-label-tag">部门领导</div>
+                    <div>{{ form.header }}</div>
+                    <div style="color: #FF0033">{{ form.header.errors }}</div>
+                    <div class="my-label-tag">组建日期</div>
+                    <div>{{ form.add_date }}</div><br><br>
+                    <button class="my-submit" type="submit">提交</button>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <a href="{% url 'department' %}">
+                        <button class="my-cancel-submit" type="button">取消</button>
+                    </a><br><br>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

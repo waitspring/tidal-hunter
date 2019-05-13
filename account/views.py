@@ -10,7 +10,7 @@ from django.shortcuts import HttpResponseRedirect, render, reverse
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
-from .forms import LoginForm, EmployeeAddForm, EmployeeEditForm, PasswordControlForm, PasswordEditForm
+from .forms import LoginForm, EmployeeAddForm, EmployeeEditForm, PasswordControlForm, PasswordEditForm, DepartmentForm
 from .models import Employee, Department
 
 
@@ -186,5 +186,31 @@ def myself(request):
 # =====================================================================================================================
 # department controlling views
 # =====================================================================================================================
+@login_required()
 def department(request):
-    pass
+    if request.method == "GET":
+        if request.GET.get("name") != None:
+            pass
+        elif request.GET.get("edit") != None:
+            pass
+        elif request.GET.get("add") != None:
+            form = DepartmentForm()
+            return render(request, "account/department_edit.html", {"form": form})
+        elif request.GET.get("delete") != None:
+            pass
+        else:
+            pass
+    elif request.method == "POST":
+        if request.GET.get("edit") != None:
+            pass
+        elif request.GET.get("add") != None:
+            form = DepartmentForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse("department"))
+            else:
+                return render(request, "account/department_edit.html", {"form": form})
+        else:
+            return HttpResponseBadRequest(content="POST 错误 *** 错误定位到 account.views.department")
+    else:
+        return HttpResponseBadRequest(content="request 错误 *** 错误定位到 account.views.department")
