@@ -51,6 +51,7 @@
                     <div style="color: #FF0033">{{ form.username.errors }}</div>
                     <div class="my-label-tag">登录密码</div>
                     <div>{{ form.password }}</div>
+                    <div style="color: #FF0033">{{ form.password.errors }}</div>
                     <div class="my-label-tag">用户姓名</div>
                     <div>{{ form.nickname }}</div>
                     <div style="color: #FF0033">{{ form.nickname.errors }}</div>
@@ -70,7 +71,8 @@
                     <div class="my-label-tag">用户状态</div>
                     <div>{{ form.is_active }}</div>
                     <div class="my-label-tag">入职日期</div>
-                    <div>{{ form.add_date }}</div><br><br>
+                    <div>{{ form.add_date }}</div>
+                    <br><br>
                     <button class="my-submit" type="submit">提交</button>
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <a href="{% url 'employee' %}">

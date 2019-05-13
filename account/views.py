@@ -10,7 +10,7 @@ from django.shortcuts import HttpResponseRedirect, render, reverse
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
-from .forms import LoginForm, EmployeeAddForm, EmployeeEditForm, PasswordControlForm
+from .forms import LoginForm, EmployeeAddForm, EmployeeEditForm, PasswordControlForm, PasswordEditForm
 from .models import Employee, Department
 
 
@@ -92,13 +92,14 @@ def employee(request):
         elif request.GET.get("add") != None:
             return render(request, "account/employee_edit.html", {"form": EmployeeAddForm})
         elif request.GET.get("delete") != None:
-            pass
+            pass   ####################################################################################################
         elif request.GET.get("password") != None:
             user = Employee.objects.get(id=request.GET.get("password"))
             form = PasswordControlForm(user=user)
             context = {
                 "employee": user,
-                "form": form
+                "form": form,
+                "password_errors_checking": 0
             }
             return render(request, "account/password_control.html", context)
         else:
@@ -131,14 +132,51 @@ def employee(request):
             form = PasswordControlForm(data=request.POST, user=user)
             context = {
                 "employee": user,
-                "form": form
+                "form": form,
+                "password_errors_checking": 0
             }
             if form.is_valid():
                 form.save()
-                return render(request, "account/employee.html", context)
+                context["password_errors_checking"] = 1
+                return render(request, "account/password_control.html", context)
             else:
                 return render(request, "account/password_control.html", context)
         else:
             return HttpResponseBadRequest(content="POST 错误 *** 错误定位到 account.views.employee")
     else:
         return HttpResponseBadRequest(content="request 错误 *** 错误定位到 account.views.employee")
+
+
+# =====================================================================================================================
+# definition of the views for the user's personal center
+# =====================================================================================================================
+@login_required()
+def myself(request):
+    if request.method == "GET":
+        if request.GET.get("password") != None:
+            form = PasswordEditForm(user=request.user)
+            context = {
+                "form": form,
+                "password_errors_checking": 0
+            }
+            return render(request, "account/password_update.html", context)
+        else:
+            context = {}
+            return render(request, "account/myself.html", context)
+    elif request.method == "POST":
+        if request.GET.get("password"):
+            form = PasswordEditForm(data=request.POST, user=request.user)
+            context = {
+                "form": form,
+                "password_errors_checking": 0
+            }
+            if form.is_valid():
+                form.save()
+                context["password_errors_checking"] = 1
+                return render(request, "account/password_update.html", context)
+            else:
+                return render(request, "account/password_update.html", context)
+        else:
+            return HttpResponseBadRequest(content="POST 错误 *** 错误定位到 account.views.myself")
+    else:
+        return HttpResponseBadRequest(content="request 错误 *** 错误定位到 account.views.myself")

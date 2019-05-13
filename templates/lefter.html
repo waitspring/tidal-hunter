@@ -19,7 +19,7 @@
         <img class="my-user-portrait" src="/static/tidal/users/demo.jpeg">
         <span>&nbsp;&nbsp;</span>
         <div class="my-user-info">
-            <a href="/" style="text-decoration: none">
+            <a href="{% url 'myself' %}" style="text-decoration: none">
                 <span class="my-user-name">{{ user.nickname }}</span>
             </a>
             <span class="my-user-email">{{ user.email }}</span>

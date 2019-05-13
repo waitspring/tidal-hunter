@@ -7,9 +7,11 @@
                 <span>用户管理</span>
                 <span>&nbsp;&nbsp;&nbsp;</span>
                 <span style="color: #777">人员管理</span>
+                {% if user.is_superuser %}
                 <span style="float: right">
                     <a class="my-edit-link" href="{% url 'employee' %}?add=True">新增用户</a>
                 </span>
+                {% endif %}
             </h5><hr>
             <!-- table showing part ---------------------------------------------------------------------------------->
             <table id="employees_list" class="table table-bordered" style="width: 100%">

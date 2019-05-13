@@ -87,13 +87,14 @@ class EmployeeAddForm(ModelForm):
             "sequence": Select(attrs={"class": "form-control my-input"}),
             "grade": Select(attrs={"class": "form-control my-input"}),
             "education": Select(attrs={"class": "form-control my-input"}),
-            "department": SelectMultiple(attrs={"class": "form-control my-input"}),
+            "department": Select(attrs={"class": "form-control my-input"}),
             "is_active": Select(choices=((True, "正常"), (False, "冻结")), attrs={"class": "form-control my-input"}),
             "add_date": DateInput(attrs={"class": "form-control my-input"})
         }
 
     def clean_password(self):
         password = self.cleaned_data.get("password")
+        print(password)
         if len(password) < 6:
             raise ValidationError("请输入 6 位以上的有效密码")
         return password
@@ -157,7 +158,7 @@ class EmployeeEditForm(ModelForm):
             "sequence": Select(attrs={"class": "form-control my-input"}),
             "grade": Select(attrs={"class": "form-control my-input"}),
             "education": Select(attrs={"class": "form-control my-input"}),
-            "department": SelectMultiple(attrs={"class": "form-control my-input"}),
+            "department": Select(attrs={"class": "form-control my-input"}),
             "is_active": Select(choices=((True, "正常"), (False, "冻结")), attrs={"class": "form-control my-input"}),
             "add_date": DateInput(attrs={"class": "form-control my-input"})
         }
@@ -207,7 +208,68 @@ class PasswordControlForm(Form):
     def clean_new_password_again(self):
         new_password = self.cleaned_data.get("new_password")
         new_password_again = self.cleaned_data.get("new_password_again")
-        if new_password != None and new_password != new_password_again:
+        if new_password and new_password != new_password_again:
+            raise ValidationError("两次密码的输入不一致")
+        return new_password_again
+
+    def save(self, commit=True):
+        self.user.set_password(self.cleaned_data["new_password_again"])
+        if commit:
+            self.user.save()
+        return self.user
+
+
+class PasswordEditForm(Form):
+    """
+    password edit form will be used by all users, enabling them to modify their passwords by themselves
+    """
+    old_password = CharField(
+        label="旧密码",
+        widget=PasswordInput(attrs={"class": "form-control", "style": "width: 350px"})
+    )
+    new_password = CharField(
+        label="新密码",
+        widget=PasswordInput(attrs={"class": "form-control", "style": "width: 350px"})
+    )
+    new_password_again = CharField(
+        label="确认新密码",
+        widget=PasswordInput(attrs={"class": "form-control", "style": "width: 350px"})
+    )
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(PasswordEditForm, self).__init__(*args, **kwargs)
+
+    def clean_old_password(self):
+        """
+        attention again: because we would use the check function -- form.is_valid( ) in our views page, to check if the
+        form value which had been submit by users is ok, this check function would call every clean_<field_name>
+        function to check field's value one by one
+
+        and:
+
+            * if we define a field name old_password
+            * then the check function need to be named clean_old_password( )
+            * if we define a field name new_password
+            * then the check function need to be named clean_new_password( )
+
+        otherwise, we could name the check function clean( )
+        """
+        old_password = self.cleaned_data.get("old_password")
+        if not self.user.check_password(old_password):
+            raise ValidationError("原有密码输入错误")
+        return old_password
+
+    def clean_new_password(self):
+        new_password = self.cleaned_data.get("new_password")
+        if len(new_password) < 6:
+            raise ValidationError("请输入 6 位以上的有效密码")
+        return new_password
+
+    def clean_new_password_again(self):
+        new_password = self.cleaned_data.get("new_password")
+        new_password_again = self.cleaned_data.get("new_password_again")
+        if new_password and new_password != new_password_again:
             raise ValidationError("两次密码的输入不一致")
         return new_password_again
 
