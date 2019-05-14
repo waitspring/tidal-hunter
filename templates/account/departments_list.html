@@ -1,0 +1,69 @@
+{% extends "myFire.html" %}
+{% block content %}
+<script type="text/javascript">
+    function dis_depart(uri) {
+        var name = document.getElementById("department_full_name").innerText;
+
+        layer.open(
+            {
+                type: 2,
+                title: name,
+                area: ["700px", "500px"],
+                shadeClose: true,
+                content: [uri]
+            }
+        );
+    }
+</script>
+
+<section class="my-content">
+    <div class="panel panel-default my-panel">
+        <div class="panel-body my-panel-body">
+            <h5>
+                <span>用户管理</span>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span style="color: #777">部门管理</span>
+                <span style="float: right">
+                    <a class="my-edit-link" href="{% url 'department' %}?add=True">新增部门</a>
+                </span>
+            </h5><hr>
+            <!-- a simple table for showing departments list --------------------------------------------------------->
+            <table class="table table-bordered table-hover">
+                <thead style="user-select: none">
+                    <tr>
+                        <th style="bordered: 1px solid #DDD; text-align: center">部门名称</th>
+                        <th style="bordered: 1px solid #DDD; text-align: center">部门领导</th>
+                        <th style="bordered: 1px solid #DDD; text-align: center">员工数量</th>
+                        <th style="bordered: 1px solid #DDD; text-align: center">成立日期</th>
+                        <th style="bordered: 1px solid #DDD; text-align: center">可选操作</th>
+                    </tr>
+                </thead>
+                <tbody align="center">
+                    {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <span style="color: #FF0033">错误警告: {{ message }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% for department in departments %}
+                    <tr>
+                        <td id="department_full_name" align="left">{{ department.full_name }}</td>
+                        <td>{{ department.header }}</td>
+                        <td>{{ department.employees_count }}</td>
+                        <td>{{ department.add_date }}</td>
+                        <td>
+                            <a onclick="return dis_depart('{% url 'department' %}?name={{ department.id }}')">查看</a>
+                            <span>&nbsp;&nbsp;</span>
+                            <a style="color: #967249" href="{% url 'department' %}?edit={{ department.id }}">更新</a>
+                            <span>&nbsp;&nbsp;</span>
+                            <a style="color: #FF0033" href="{% url 'department' %}?delete={{ department.id }}">删除</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

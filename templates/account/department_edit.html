@@ -13,18 +13,39 @@
             <!-- form edit part -------------------------------------------------------------------------------------->
             <div class="my-form-background">
                 {% if department %}
-                {% else %}
-                <form action="{% url 'department' %}?add=True" method="post">
+                <form action="{% url 'department' %}?edit={{ department.id }}" method="post">
                     {% csrf_token %}
                     <div class="my-label-tag">部门名称</div>
                     <div>{{ form.self_name }}</div>
-                    <div style="color: #FF0033">{{ form.self_name.errors }}</div>
+                    {% if warn_msg %}
+                    <div style="color: #FF0033">{{ warn_msg }}</div>
+                    {% endif %}
                     <div class="my-label-tag">上级组织</div>
                     <div>{{ form.father }}</div>
                     <div style="color: #FF0033">{{ form.father.errors }}</div>
                     <div class="my-label-tag">部门领导</div>
                     <div>{{ form.header }}</div>
-                    <div style="color: #FF0033">{{ form.header.errors }}</div>
+                    <div class="my-label-tag">组建日期</div>
+                    <div>{{ form.add_date }}</div><br><br>
+                    <button class="my-submit" type="submit">提交</button>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <a href="{% url 'department' %}">
+                        <button class="my-cancel-submit" type="button">取消</button>
+                    </a><br><br>
+                </form>
+                {% else %}
+                <form action="{% url 'department' %}?add=True" method="post">
+                    {% csrf_token %}
+                    <div class="my-label-tag">部门名称</div>
+                    <div>{{ form.self_name }}</div>
+                    {% if warn_msg %}
+                    <div style="color: #FF0033"><ul><li>{{ warn_msg }}</li></ul></div>
+                    {% endif %}
+                    <div class="my-label-tag">上级组织</div>
+                    <div>{{ form.father }}</div>
+                    <div style="color: #FF0033">{{ form.father.errors }}</div>
+                    <div class="my-label-tag">部门领导</div>
+                    <div>{{ form.header }}</div>
                     <div class="my-label-tag">组建日期</div>
                     <div>{{ form.add_date }}</div><br><br>
                     <button class="my-submit" type="submit">提交</button>

@@ -307,6 +307,6 @@ class DepartmentForm(ModelForm):
         """
         father = self.cleaned_data.get("father")
         if father:
-            self.cleaned_data["full_name"] = father.full_name + '/' + self.cleaned_data["self_name"]
+            self.cleaned_data["full_name"] = father.full_name + " / " + self.cleaned_data["self_name"]
         else:
             self.cleaned_data["full_name"] = self.cleaned_data["self_name"]

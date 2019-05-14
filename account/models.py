@@ -119,7 +119,7 @@ class Department(models.Model):
     django do not support define ourselves' group class
     """
     self_name = CharField(lazy("部门名称"), max_length=30, blank=False, null=False)
-    full_name = CharField(lazy("部门全称"), max_length=255, blank=True, null=True)
+    full_name = CharField(lazy("部门全称"), max_length=255, unique=True, blank=True, null=True)
 
     father = ForeignKey(
         "self", verbose_name=lazy("上级部门"),

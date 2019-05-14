@@ -7,9 +7,10 @@ account.views
 
 
 from django.shortcuts import HttpResponseRedirect, render, reverse
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
+from django.utils.translation import ugettext_lazy as lazy
 from .forms import LoginForm, EmployeeAddForm, EmployeeEditForm, PasswordControlForm, PasswordEditForm, DepartmentForm
 from .models import Employee, Department
 
@@ -80,7 +81,10 @@ def employee(request):
     if request.method == "GET":
         if request.GET.get("name") != None:
             employee = Employee.objects.get(id=request.GET.get("name"))
-            return render(request, "account/employee.html", {"employee": employee})
+            context = {
+                "employee": employee
+            }
+            return render(request, "account/employee.html", context)
         elif request.GET.get("edit") != None:
             employee = Employee.objects.get(id=request.GET.get("edit"))
             form = EmployeeEditForm(instance=employee)
@@ -90,7 +94,11 @@ def employee(request):
             }
             return render(request, "account/employee_edit.html", context)
         elif request.GET.get("add") != None:
-            return render(request, "account/employee_edit.html", {"form": EmployeeAddForm})
+            form = EmployeeAddForm
+            context = {
+                "form": form
+            }
+            return render(request, "account/employee_edit.html", context)
         elif request.GET.get("delete") != None:
             Employee.objects.filter(id=request.GET.get("delete")).delete()
             return HttpResponseRedirect(reverse("employee"))
@@ -105,7 +113,10 @@ def employee(request):
             return render(request, "account/password_control.html", context)
         else:
             employees = Employee.objects.all()
-            return render(request, "account/employees_list.html", {"employees": employees})
+            context = {
+                "employees": employees
+            }
+            return render(request, "account/employees_list.html", context)
     elif request.method == "POST":
         if request.GET.get("edit") != None:
             employee = Employee.objects.get(id=request.GET.get("edit"))
@@ -121,13 +132,16 @@ def employee(request):
                 return render(request, "account/employee_edit.html", context)
         elif request.GET.get("add") != None:
             form = EmployeeAddForm(request.POST)
+            context = {
+                "form": form
+            }
             if form.is_valid():
                 employee = form.save(commit=False)
                 employee.set_password(form.cleaned_data.get("password"))
                 employee.save()
                 return HttpResponseRedirect(reverse("employee"))
             else:
-                return render(request, "account/employee_edit.html", {"form": form})
+                return render(request, "account/employee_edit.html", context)
         elif request.GET.get("password") != None:
             user = Employee.objects.get(id=request.GET.get("password"))
             form = PasswordControlForm(data=request.POST, user=user)
@@ -190,26 +204,86 @@ def myself(request):
 def department(request):
     if request.method == "GET":
         if request.GET.get("name") != None:
-            pass
+            context = {}
+            return render(request, "account/department.html", context)
         elif request.GET.get("edit") != None:
-            pass
+            department = Department.objects.get(id=request.GET.get("edit"))
+            form = DepartmentForm(instance=department)
+            context = {
+                "department": department,
+                "form": form
+            }
+            return render(request, "account/department_edit.html", context)
         elif request.GET.get("add") != None:
             form = DepartmentForm()
-            return render(request, "account/department_edit.html", {"form": form})
+            context = {
+                "form": form
+            }
+            return render(request, "account/department_edit.html", context)
         elif request.GET.get("delete") != None:
-            pass
-        else:
-            pass
-    elif request.method == "POST":
-        if request.GET.get("edit") != None:
-            pass
-        elif request.GET.get("add") != None:
-            form = DepartmentForm(request.POST)
-            if form.is_valid():
-                form.save()
+            department = Department.objects.get(id=request.GET.get("delete"))
+            if Department.objects.filter(father=department.id):
+                messages.error(request, lazy("当前部门仍然有下属机构, 删除阻止"))
+                print(messages.error)
                 return HttpResponseRedirect(reverse("department"))
             else:
-                return render(request, "account/department_edit.html", {"form": form})
+                Department.objects.filter(id=request.GET.get("delete")).delete()
+                return HttpResponseRedirect(reverse("department"))
+        else:
+            departments = Department.objects.all()
+            for department in departments:
+                department.employees_count = len(Employee.objects.filter(department=department.id))
+            context = {
+                "departments": departments
+            }
+            return render(request, "account/departments_list.html", context)
+    elif request.method == "POST":
+        if request.GET.get("edit") != None:
+            department = Department.objects.get(id=request.GET.get("edit"))
+            form = DepartmentForm(data=request.POST, instance=department)
+            context = {
+                "department": department,
+                "form": form
+            }
+            if form.is_valid():
+                # =====================================================================================================
+                # this is a checking part for providing a unique department full name
+                # =====================================================================================================
+                try:
+                    check = Department.objects.get(full_name=form.cleaned_data["full_name"])
+                except:
+                    check = None
+                if not check or int(check.id) == int(request.GET.get("edit")):
+                    form.save()
+                    return HttpResponseRedirect(reverse("department"))
+                else:
+                    context["warn_msg"] = "该部门已经存在, 请勿重复建立"
+                    return render(request, "account/department_edit.html", context)
+                # =====================================================================================================
+            else:
+                return render(request, "account/department_edit.html", context)
+        elif request.GET.get("add") != None:
+            form = DepartmentForm(request.POST)
+            context = {
+                "form": form
+            }
+            if form.is_valid():
+                # =====================================================================================================
+                # this is a checking part too
+                # =====================================================================================================
+                try:
+                    check = Department.objects.get(full_name=form.cleaned_data["full_name"])
+                except:
+                    check = None
+                if not check:
+                    form.save()
+                    return HttpResponseRedirect(reverse("department"))
+                else:
+                    context["warn_msg"] = "该部门已经存在, 请勿重复建立"
+                    return render(request, "account/department_edit.html", context)
+                # =====================================================================================================
+            else:
+                return render(request, "account/department_edit.html", context)
         else:
             return HttpResponseBadRequest(content="POST 错误 *** 错误定位到 account.views.department")
     else:
