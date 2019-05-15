@@ -6,10 +6,10 @@ account.views
 """
 
 
-from django.shortcuts import HttpResponseRedirect, render, reverse
+from django.shortcuts import render, reverse
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.utils.translation import ugettext_lazy as lazy
 from .forms import LoginForm, EmployeeAddForm, EmployeeEditForm, PasswordControlForm, PasswordEditForm, DepartmentForm
 from .models import Employee, Department
@@ -204,7 +204,11 @@ def myself(request):
 def department(request):
     if request.method == "GET":
         if request.GET.get("name") != None:
-            context = {}
+            department = Department.objects.get(id=request.GET.get("name"))
+            context = {
+                "employees": Employee.objects.filter(department=department.id),
+                "employees_count": len(Employee.objects.filter(department=department.id))
+            }
             return render(request, "account/department.html", context)
         elif request.GET.get("edit") != None:
             department = Department.objects.get(id=request.GET.get("edit"))
@@ -224,7 +228,6 @@ def department(request):
             department = Department.objects.get(id=request.GET.get("delete"))
             if Department.objects.filter(father=department.id):
                 messages.error(request, lazy("当前部门仍然有下属机构, 删除阻止"))
-                print(messages.error)
                 return HttpResponseRedirect(reverse("department"))
             else:
                 Department.objects.filter(id=request.GET.get("delete")).delete()

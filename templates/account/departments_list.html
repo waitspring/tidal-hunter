@@ -39,10 +39,13 @@
                     </tr>
                 </thead>
                 <tbody align="center">
+                    <!-- error messages ------------------------------------------------------------------------------>
                     {% if messages %}
                     <div class="messages">
                         {% for message in messages %}
-                            <span style="color: #FF0033">错误警告: {{ message }}</span>
+                        <span style="color: #FF0033">
+                            <ul><li>错误警告: {{ message }}</li></ul>
+                        </span>
                         {% endfor %}
                     </div>
                     {% endif %}

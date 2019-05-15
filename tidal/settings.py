@@ -39,7 +39,8 @@ INSTALLED_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "board",
-    "account"
+    "account",
+    "engineering"
 )
 
 MIDDLEWARE_CLASSES = (

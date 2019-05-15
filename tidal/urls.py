@@ -18,5 +18,6 @@ from board.views import board
 # =====================================================================================================================
 urlpatterns = [
     url(r"^accounts/", include("account.urls")),
+    url(r"^engineering/", include("engineering.urls")),
     url(r"^$", board, name="board")
 ]

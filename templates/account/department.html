@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'tidal/css/myTidal.css' %}">
+        <link rel="stylesheet" href="{% static 'tidal/css/content.css' %}">
+    </head>
+    <body>
+        <script src="{% static 'tidal/js/jquery.min.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+        <!-- real page ----------------------------------------------------------------------------------------------->
+        <section style="margin-left: 20px; margin-top: 20px">
+            {% if employees_count != 0 %}
+            <table class="table" style="width: 660px">
+                <thead>
+                    <tr>
+                        <th colspan="4" style="color: #337AB7">下属同学 {{ employees_count }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                    <tr>
+                        <td align="left" style="width: 150px">{{ employee.nickname }}</td>
+                        <td align="center" style="width: 150px">{{ employee.phone }}</td>
+                        <td align="center" style="width: 150px">{{ employee.sequence }}</td>
+                        <td align="right" style="width: 150px">{{ employee.grade }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </section>
+    </body>
+</html>
