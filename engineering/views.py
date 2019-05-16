@@ -20,9 +20,19 @@ from .models import Production, Project
 def production(request):
     if request.method == "GET":
         if request.GET.get("name") != None:
-            pass
+            production = Production.objects.get(id=request.GET.get("name"))
+            context = {
+                "production": production
+            }
+            return render(request, "engineering/production.html", context)
         elif request.GET.get("edit") != None:
-            pass
+            production = Production.objects.get(id=request.GET.get("edit"))
+            form = ProductionForm(instance=production)
+            context = {
+                "production": production,
+                "form": form
+            }
+            return render(request, "engineering/production_edit.html", context)
         elif request.GET.get("add") != None:
             form = ProductionForm
             context = {
@@ -30,7 +40,8 @@ def production(request):
             }
             return render(request, "engineering/production_edit.html", context)
         elif request.GET.get("delete") != None:
-            pass
+            Production.objects.filter(id=request.GET.get("delete")).delete()
+            return HttpResponseRedirect(reverse("production"))
         else:
             productions = Production.objects.all()
             context = {
@@ -39,7 +50,32 @@ def production(request):
             return render(request, "engineering/productions_list.html", context)
     elif request.method == "POST":
         if request.GET.get("edit") != None:
-            pass
+            production = Production.objects.get(id=request.GET.get("edit"))
+            form = ProductionForm(data=request.POST, instance=production)
+            context = {
+                "production": production,
+                "form": form
+            }
+            if form.is_valid():
+                # =====================================================================================================
+                # =====================================================================================================
+                try:
+                    check = Production.objects.get(name=form.cleaned_data["name"])
+                except:
+                    check = None
+                if check and int(check.id) != int(request.GET.get("edit")):
+                    context["warn_name"] = "该产品线已经存在, 产品线名称变更错误"
+                    return render(request, "engineering/production_edit.html", context)
+                try:
+                    check = Production.objects.get(tag=form.cleaned_data["tag"])
+                except:
+                    check = None
+                if check and int(check.id) != int(request.GET.get("edit")):
+                    context["warn_tag"] = "该产品标识已经被使用, 产品线标识变更错误"
+                    return render(request, "engineering/production_edit.html", context)
+                # =====================================================================================================
+                form.save()
+                return render(request, "engineering/production.html", context)
         elif request.GET.get("add") != None:
             form = ProductionForm(request.POST)
             context = {

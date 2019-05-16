@@ -1,0 +1,50 @@
+{% extends "myFire.html" %}
+{% block content %}
+<section class="my-content">
+    <div class="panel panel-default my-panel">
+        <div class="panel-body my-panel-body">
+            <h5>
+                <span>项目管理</span>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span style="color: #777">产品档案</span>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span style="color: #91989F">{{ production.name }}</span>
+                <span style="float: right">
+                    <a class="my-edit-link" href="{% url 'production' %}?edit={{ production.id }}">更新</a>
+                    <span>&nbsp;&nbsp;</span>
+                    <a class="my-del-link" href="{% url 'production' %}?delete={{ production.id }}">删除</a>
+                </span>
+            </h5><hr>
+            <!-- production's information showing part --------------------------------------------------------------->
+            <table class="table table-striped table-bordered">
+                <tbody>
+                    <tr>
+                        <td style="width: 200px" align="center">产品名称</td>
+                        <td style="width: 300px">{{ production.name }}</td>
+                        <td style="width: 200px" align="center">产品标识</td>
+                        <td style="width: 300px">{{ production.tag }}</td>
+                        <td style="width: 200px" align="center">启动时间</td>
+                        <td style="width: 300px">
+                            {% if production.add_date %}{{ production.add_date }}{% else %}--{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">产品经理</td>
+                        <td>{% if production.manager %}{{ production.manager }}{% else %}--{% endif %}</td>
+                        <td align="center">运营部门</td>
+                        <td>{% if production.department %}{{ production.department }}{% else %}--{% endif %}</td>
+                        <td align="center">使用用户</td>
+                        <td>{% if production.user %}{{ production.user }}{% else %}--{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td align="center">产品说明</td>
+                        <td colspan="5">
+                            {% if production.description %}{{ production.description }}{% else %}--{% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

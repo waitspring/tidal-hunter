@@ -94,7 +94,6 @@ class EmployeeAddForm(ModelForm):
 
     def clean_password(self):
         password = self.cleaned_data.get("password")
-        print(password)
         if len(password) < 6:
             raise ValidationError("请输入 6 位以上的有效密码")
         return password

@@ -13,19 +13,37 @@
             <!-- form edit part -------------------------------------------------------------------------------------->
             <div class="my-form-background">
                 {% if production %}
+                <form action="{% url 'production' %}?edit={{ production.id }}" method="post">
+                    {% csrf_token %}
+                    <div class="my-label-tag">产品名称</div>
+                    <div>{{ form.name }}</div>
+                    {% if warn_name %}<div style="color: #FF0033"><ul><li>{{ warn_name }}</li></ul></div>{% endif %}
+                    <div class="my-label-tag">产品标识</div>
+                    <div>{{ form.tag }}</div>
+                    {% if warn_tag %}<div style="color: #FF0033"><ul><li>{{ warn_tag }}</li></ul></div>{% endif %}
+                    <div class="my-label-tag">产品描述</div>
+                    <div>{{ form.description }}</div>
+                    <div class="my-label-tag">产品用户</div>
+                    <div>{{ form.user }}</div>
+                    <div class="my-label-tag">运营部门</div>
+                    <div>{{ form.department }}</div>
+                    <div class="my-label-tag">添加日期</div>
+                    <div>{{ form.add_date }}</div><br><br>
+                    <button class="my-submit" type="submit">提交</button>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <a href="{% url 'production' %}">
+                        <button class="my-cancel-submit" type="button">取消</button>
+                    </a><br><br>
+                </form>
                 {% else %}
                 <form action="{% url 'production' %}?add=True" method="post">
                     {% csrf_token %}
                     <div class="my-label-tag">产品名称</div>
                     <div>{{ form.name }}</div>
-                    {% if warn_name %}
-                    <div style="color: #FF0033"><ul><li>{{ warn_name }}</li></ul></div>
-                    {% endif %}
+                    {% if warn_name %}<div style="color: #FF0033"><ul><li>{{ warn_name }}</li></ul></div>{% endif %}
                     <div class="my-label-tag">产品标识</div>
                     <div>{{ form.tag }}</div>
-                    {% if warn_tag %}
-                    <div style="color: #FF0033"><ul><li>{{ warn_tag }}</li></ul></div>
-                    {% endif %}
+                    {% if warn_tag %}<div style="color: #FF0033"><ul><li>{{ warn_tag }}</li></ul></div>{% endif %}
                     <div class="my-label-tag">产品描述</div>
                     <div>{{ form.description }}</div>
                     <div class="my-label-tag">产品用户</div>
