@@ -56,11 +56,15 @@
                         <td>{{ department.employees_count }}</td>
                         <td>{{ department.add_date }}</td>
                         <td>
-                            <a onclick="return dis_depart('{% url 'department' %}?name={{ department.id }}')">查看</a>
-                            <span>&nbsp;&nbsp;</span>
-                            <a style="color: #967249" href="{% url 'department' %}?edit={{ department.id }}">更新</a>
-                            <span>&nbsp;&nbsp;</span>
-                            <a style="color: #FF0033" href="{% url 'department' %}?delete={{ department.id }}">删除</a>
+                            <a onclick="return dis_depart('{% url 'department' %}?name={{ department.id }}')">
+                                <span class="my-jump-1">查看</span>
+                            </a>
+                            <a style="color: #967249" href="{% url 'department' %}?edit={{ department.id }}">
+                                <span class="my-jump-2">更新</span>
+                            </a>
+                            <a style="color: #FF0033" href="{% url 'department' %}?delete={{ department.id }}">
+                                <span class="my-jump-3">删除</span>
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}

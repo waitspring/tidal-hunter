@@ -9,7 +9,7 @@ engineering.views
 from django.shortcuts import render, reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
-from .forms import ProductionForm
+from .forms import ProductionForm, ProjectForm
 from .models import Production, Project
 
 
@@ -108,3 +108,61 @@ def production(request):
             return HttpResponseBadRequest(content="POST 错误 *** 错误定位到 engineering.views.production")
     else:
         return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views.production")
+
+
+# =====================================================================================================================
+# project view set
+# =====================================================================================================================
+@login_required()
+def project(request):
+    if request.method == "GET":
+        if request.GET.get("name") != None:
+            pass
+        elif request.GET.get("edit") != None:
+            pass
+        elif request.GET.get("add") != None:
+            form = ProjectForm
+            context = {
+                "form": form
+            }
+            return render(request, "engineering/project_edit.html", context)
+        elif request.GET.get("delete") != None:
+            pass
+        else:
+            projects = Project.objects.all()
+            context = {
+                "projects": projects
+            }
+            return render(request, "engineering/projects_list.html", context)
+    elif request.method == "POST":
+        if request.GET.get("edit") != None:
+            pass
+        elif request.GET.get("add") != None:
+            form = ProjectForm(request.POST)
+            context = {
+                "form": form
+            }
+            if form.is_valid():
+                # =====================================================================================================
+                # this is checking part
+                # =====================================================================================================
+                try:
+                    check = Project.objects.get(full_name=form.cleaned_data["full_name"])
+                except:
+                    check = None
+                if check:
+                    context["warn_name"] = "当前工程已经存在, 请勿重复添加"
+                    return render(request, "engineering/project_edit.html", context)
+                try:
+                    check = Project.objects.get(full_tag=form.cleaned_data["full_tag"])
+                except:
+                    check = None
+                if check:
+                    context["warn_tag"] = "当前工程标识已经被占用, 请重新指定一个有效的工程标识"
+                    return render(request, "engineering/project_edit.html", context)
+                form.save()
+                return HttpResponseRedirect(reverse("project"))
+        else:
+            return HttpResponseBadRequest(content="POST 错误 *** 错误定位到 engineering.views.project")
+    else:
+        return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views.project")

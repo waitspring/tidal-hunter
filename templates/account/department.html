@@ -18,16 +18,41 @@
             <table class="table" style="width: 660px">
                 <thead>
                     <tr>
-                        <th colspan="4" style="color: #337AB7">下属同学 {{ employees_count }}</th>
+                        <th colspan="4" style="color: #337AB7">
+                            <span>下属同学</span>
+                            <span style="color: #777; float: right">&nbsp;&nbsp;&nbsp;{{ employees_count }}</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for employee in employees %}
-                    <tr>
-                        <td align="left" style="width: 150px">{{ employee.nickname }}</td>
-                        <td align="center" style="width: 150px">{{ employee.phone }}</td>
-                        <td align="center" style="width: 150px">{{ employee.sequence }}</td>
+                    <tr style="color: #555">
+                        <td style="width: 150px">{{ employee.nickname }}</td>
+                        <td style="width: 150px">{{ employee.phone }}</td>
+                        <td style="width: 150px">{{ employee.sequence }}</td>
                         <td align="right" style="width: 150px">{{ employee.grade }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            <br>
+            {% if productions_count != 0 %}
+            <table class="table" style="width: 660px">
+                <thead>
+                    <tr>
+                        <th colspan="4" style="color: #337AB7">
+                            <span>负责产品</span>
+                            <span style="color: #777; float: right">&nbsp;&nbsp;&nbsp;{{ productions_count }}</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for production in productions %}
+                    <tr style="color: #555">
+                        <td style="width: 150px">{{ production.name }}</td>
+                        <td style="width: 150px">{{ production.tag }}</td>
+                        <td style="width: 150px">{{ production.user }}</td>
+                        <td align="right" style="width: 150px">{{ production.add_date }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

@@ -10,7 +10,23 @@
                 <span>&nbsp;&nbsp;&nbsp;</span>
                 <span style="color: #91989F">{{ employee.nickname }}</span>
                 {% if user.is_superuser %}
+                <!-- controlling password part, just administrator can use this part --------------------------------->
+                <script type="text/javascript">
+                    function passwd(uri) {
+                        layer.open(
+                            {
+                                type: 2,
+                                title: "重置密码",
+                                area: ["700px", "500px"],
+                                shadeClose: true,
+                                content: [uri]
+                            }
+                        );
+                    }
+                </script>
                 <span style="float: right">
+                    <a class="my-update-link" onclick="return passwd('{% url 'employee' %}?password={{ employee.id }}')">重置密码</a>
+                    <span>&nbsp;&nbsp;</span>
                     <a class="my-edit-link" href="{% url 'employee' %}?edit={{ employee.id }}">更新</a>
                     <span>&nbsp;&nbsp;</span>
                     <a class="my-del-link" href="{% url 'employee' %}?delete={{ employee.id }}">删除</a>
@@ -64,26 +80,25 @@
                     </tr>
                 </tbody>
             </table>
-            <!-- controlling password part, just administrator can use this part ------------------------------------->
-            {% if user.is_superuser %}
-            <script type="text/javascript">
-                function passwd(uri) {
-                    layer.open(
-                        {
-                            type: 2,
-                            title: "重置密码",
-                            area: ["700px", "500px"],
-                            shadeClose: true,
-                            content: [uri]
-                        }
-                    );
-                }
-            </script>
-            <div style="float: right">
-                <a class="my-update-link" onclick="return passwd('{% url 'employee' %}?password={{ employee.id }}')">
-                    <span>重置密码</span>
-                </a>
-            </div>
+            <!-- production information show if employee is a production manager ------------------------------------->
+            {% if productions %}
+            <h5 class="my-title-label">
+                <i class="fa fa-google-wallet fa-icon" aria-hidden="true"></i>
+                <span>&nbsp;&nbsp;</span>
+                <span>负责产品</span>
+            </h5>
+            <table class="table table-hover">
+                <tbody>
+                    {% for production in productions %}
+                    <tr>
+                        <td style="width: 200px" align="center">
+                            <a href="{% url 'production' %}?name={{ production.id }}">{{ production.name }}</a>
+                        </td>
+                        <td style="width: 1300px">{{ production.description }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
             {% endif %}
         </div>
     </div>

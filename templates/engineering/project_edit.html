@@ -1,0 +1,61 @@
+{% extends "myFire.html" %}
+{% block content %}
+<section class="my-content">
+    <div class="panel panel-default my-panel">
+        <div class="panel-body my-panel-body">
+            <h5>
+                <span>项目管理</span>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span style="color: #777">工程档案</span>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span style="color: #91989F">{{ project.full_name }}</span>
+            </h5><hr>
+            <!-- form edit part -------------------------------------------------------------------------------------->
+            <div class="my-form-background">
+                {% if project %}
+                {% else %}
+                <!-- adding form ------------------------------------------------------------------------------------->
+                <form action="{% url 'project' %}?add=True" method="post">
+                    {% csrf_token %}
+                    <div class="my-label-tag">工程名称</div>
+                    <div>{{ form.self_name }}</div>
+                    {% if warn_name %}<div style="color: #FF0033"><ul><li>{{ warn_name }}</li></ul></div>{% endif %}
+                    <div class="my-label-tag">工程标识</div>
+                    <div>{{ form.self_tag }}</div>
+                    {% if warn_tag %}<div style="color: #FF0033"><ul><li>{{ warn_tag }}</li></ul></div>{% endif %}
+                    <div class="my-label-tag">配置域名</div>
+                    <div>{{ form.domain }}</div>
+                    <div class="my-label-tag">代码托管地址</div>
+                    <div>{{ form.git_source }}</div>
+                    <div class="my-label-tag">工程描述</div>
+                    <div>{{ form.description }}</div>
+                    <div class="my-label-tag">工程语言</div>
+                    <div>{{ form.language }}</div>
+                    <div class="my-label-tag">工程架构</div>
+                    <div>{{ form.arch }}</div>
+                    <div class="my-label-tag">工程类型</div>
+                    <div>{{ form.genre }}</div>
+                    <div class="my-label-tag">工程状态</div>
+                    <div>{{ form.status }}</div>
+                    <div class="my-label-tag">所属产品</div>
+                    <div>{{ form.production }}</div>
+                    <div class="my-label-tag">工程开发负责人</div>
+                    <div>{{ form.developer }}</div>
+                    <div class="my-label-tag">工程测试负责人</div>
+                    <div>{{ form.tester }}</div>
+                    <div class="my-label-tag">工程运维负责人</div>
+                    <div>{{ form.operator }}</div>
+                    <div class="my-label-tag">工程添加日期</div>
+                    <div>{{ form.add_date }}</div><br><br>
+                    <button class="my-submit" type="submit">提交</button>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <a href="{% url 'project' %}">
+                        <button class="my-cancel-submit" type="button">取消</button>
+                    </a><br><br>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

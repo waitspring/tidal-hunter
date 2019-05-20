@@ -6,43 +6,37 @@
             <h5>
                 <span>项目管理</span>
                 <span>&nbsp;&nbsp;&nbsp;</span>
-                <span style="color: #777">产品档案</span>
+                <span style="color: #777">工程档案</span>
                 <span style="float: right">
-                    <a class="my-edit-link" href="{% url 'production' %}?add=True">新增产品</a>
+                    <a class="my-edit-link" href="{% url 'project' %}?add=True">新建工程</a>
                 </span>
             </h5><hr>
-            <!-- the page part --------------------------------------------------------------------------------------->
-            <table id="productions_list" class="table table-bordered" style="width: 100%">
+            <!-- table showing --------------------------------------------------------------------------------------->
+            <table id="projects_list" class="table table-bordered" style="width: 100%">
                 <thead style="user-select: none">
                     <tr>
-                        <th style="text-align: center">产品名称</th>
-                        <th style="text-align: center">产品标识</th>
-                        <th style="text-align: center">产品经理</th>
-                        <th style="text-align: center">产品用户</th>
-                        <th style="text-align: center">运营部门</th>
+                        <th style="text-align: center">工程名称</th>
+                        <th style="text-align: center">工程标识</th>
+                        <th style="text-align: center">工程架构</th>
+                        <th style="text-align: center">工程类型</th>
+                        <th style="text-align: center">工程状态</th>
                     </tr>
                 </thead>
                 <tbody style="text-align: center">
-                    {% for production in productions %}
+                    {% for project in projects %}
                     <tr>
-                        <td>
-                            <a href="{% url 'production' %}?name={{ production.id }}">{{ production.name }}</a>
-                        </td>
-                        <td>{{ production.tag }}</td>
-                        <td>{% if production.manager %}{{ production.manager }}{% else %}--{% endif %}</td>
-                        <td>{% if production.user %}{{ production.user }}{% else %}--{% endif %}</td>
-                        {% if production.department %}
-                        <td align="left">{{ production.department }}</td>
-                        {% else %}
-                        <td align="center">--</td>
-                        {% endif %}
+                        <td><a href="{% url 'project' %}?name={{ project.id }}">{{ project.full_name }}</a></td>
+                        <td>{{ project.full_tag }}</td>
+                        <td>{% if project.arch %}{{ project.arch }}{% else %}--{% endif %}</td>
+                        <td>{% if project.genre %}{{ project.genre }}{% else %}--{% endif %}</td>
+                        <td>{% if project.status %}{{ project.status }}{% else %}--{% endif %}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <!-- bootstrap data table init --------------------------------------------------------------------------->
             <script type="text/javascript">
-                $("#productions_list").DataTable(
+                $("#projects_list").DataTable(
                     {
                         "info": false,
                         "ordering": false,

@@ -109,3 +109,33 @@ a.my-update-link:hover {
     background-color: #EEE;
     border-top: 5px solid #91989F;
 }
+
+.my-jump-1 {
+    padding: 5px 10px;
+    transition: background-color 200ms ease;
+}
+
+.my-jump-1:hover {
+    background-color: #41AC8D;
+    color: #FFF;
+}
+
+.my-jump-2 {
+    padding: 5px 10px;
+    transition: background-color 200ms ease;
+}
+
+.my-jump-2:hover {
+    background-color: #967249;
+    color: #FFF;
+}
+
+.my-jump-3 {
+    padding: 5px 10px;
+    transition: background-color 200ms ease;
+}
+
+.my-jump-3:hover {
+    background-color: #FF0033;
+    color: #FFF;
+}

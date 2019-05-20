@@ -11,6 +11,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.utils.translation import ugettext_lazy as lazy
+from engineering.models import Production
 from .forms import LoginForm, EmployeeAddForm, EmployeeEditForm, PasswordControlForm, PasswordEditForm, DepartmentForm
 from .models import Employee, Department
 
@@ -80,9 +81,9 @@ def employee(request):
     """
     if request.method == "GET":
         if request.GET.get("name") != None:
-            employee = Employee.objects.get(id=request.GET.get("name"))
             context = {
-                "employee": employee
+                "employee": Employee.objects.get(id=request.GET.get("name")),
+                "productions": Production.objects.filter(manager=request.GET.get("name"))
             }
             return render(request, "account/employee.html", context)
         elif request.GET.get("edit") != None:
@@ -176,7 +177,9 @@ def myself(request):
             }
             return render(request, "account/password_update.html", context)
         else:
-            context = {}
+            context = {
+                "productions": Production.objects.filter(manager=request.user)
+            }
             return render(request, "account/myself.html", context)
     elif request.method == "POST":
         if request.GET.get("password"):
@@ -207,7 +210,9 @@ def department(request):
             department = Department.objects.get(id=request.GET.get("name"))
             context = {
                 "employees": Employee.objects.filter(department=department.id),
-                "employees_count": len(Employee.objects.filter(department=department.id))
+                "employees_count": len(Employee.objects.filter(department=department.id)),
+                "productions": Production.objects.filter(department=department.id),
+                "productions_count": len(Production.objects.filter(department=department.id))
             }
             return render(request, "account/department.html", context)
         elif request.GET.get("edit") != None:
