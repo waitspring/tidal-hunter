@@ -1,0 +1,78 @@
+{% extends "myFire.html" %}
+{% block content %}
+<section class="my-content">
+    <div class="panel panel-default my-panel">
+        <div class="panel-body my-panel-body">
+            <h5>
+                <span>项目管理</span>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span style="color: #777">工程档案</span>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span style="color: #91989F">{{ project.full_name }}</span>
+                <span style="float: right">
+                    <a class="my-edit-link" href="{% url 'project' %}?edit={{ project.id }}">更新</a>
+                    <span>&nbsp;&nbsp;</span>
+                    <a class="my-del-link" href="{% url 'project' %}?delete={{ project.id }}">删除</a>
+                </span>
+            </h5><hr>
+            <!-- project information showing ------------------------------------------------------------------------->
+            <table class="table table-striped table-bordered">
+                <tbody>
+                    <tr>
+                        <td width="200px" align="center">工程名称</td>
+                        <td width="300px">{{ project.full_name }}</td>
+                        <td width="200px" align="center">工程标识</td>
+                        <td width="300px">{{ project.full_tag }}</td>
+                        <td width="200px" align="center">工程状态</td>
+                        {% if "stay for online" in project.status %}
+                        <td width="300px" style="color: #268785"><strong>{{ project.status }}</strong></td>
+                        {% elif "online" in project.status %}
+                        <td width="300px" style="color: #91AD70"><strong>{{ project.status }}</strong></td>
+                        {% elif "stay for offline" in project.status %}
+                        <td width="300px" style="color: #6A4C9C"><strong>{{ project.status }}</strong></td>
+                        {% elif "offline" in project.status %}
+                        <td width="300px" style="color: #FF0033"><strong>{{ project.status }}</strong></td>
+                        {% else %}
+                        <td width="300px">--</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td align="center">工程语言</td>
+                        <td>{% if project.language %}{{ project.language }}{% else %}--{% endif %}</td>
+                        <td align="center">工程架构</td>
+                        <td>{% if project.arch %}{{ project.arch }}{% else %}--{% endif %}</td>
+                        <td align="center">工程类型</td>
+                        <td>{% if project.genre %}{{ project.genre }}{% else %}--{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td align="center">开发主管</td>
+                        <td>{% if project.developer %}{{ project.developer }}{% else %}--{% endif %}</td>
+                        <td align="center">测试主管</td>
+                        <td>{% if project.tester %}{{ project.tester }}{% else %}--{% endif %}</td>
+                        <td align="center">运维主管</td>
+                        <td>{% if project.operator %}{{ project.operator }}{% else %}--{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td align="center">域名配置</td>
+                        <td colspan="5">{% if project.domain %}{{ project.domain }}{% else %}--{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td align="center">代码托管</td>
+                        <td colspan="5">{% if project.git_source %}{{ project.git_source }}{% else %}--{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td align="center">启动时间</td>
+                        <td colspan="5">{% if project.add_date %}{{ project.add_date }}{% else %}--{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td align="center">工程描述</td>
+                        <td colspan="5">
+                            {% if project.description %}{{ project.description }}{% else %}--{% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

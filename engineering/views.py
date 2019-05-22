@@ -117,9 +117,19 @@ def production(request):
 def project(request):
     if request.method == "GET":
         if request.GET.get("name") != None:
-            pass
+            project = Project.objects.get(id=request.GET.get("name"))
+            context = {
+                "project": project
+            }
+            return render(request, "engineering/project.html", context)
         elif request.GET.get("edit") != None:
-            pass
+            project = Project.objects.get(id=request.GET.get("edit"))
+            form = ProjectForm(instance=project)
+            context = {
+                "project": project,
+                "form": form
+            }
+            return render(request, "engineering/project_edit.html", context)
         elif request.GET.get("add") != None:
             form = ProjectForm
             context = {
@@ -136,7 +146,32 @@ def project(request):
             return render(request, "engineering/projects_list.html", context)
     elif request.method == "POST":
         if request.GET.get("edit") != None:
-            pass
+            project = Project.objects.get(id=request.GET.get("edit"))
+            form = ProjectForm(data=request.POST, instance=project)
+            context = {
+                "project": project,
+                "form": form
+            }
+            if form.is_valid():
+                # =====================================================================================================
+                # this is checking part
+                # =====================================================================================================
+                try:
+                    check = Project.objects.get(full_name=form.cleaned_data["full_name"])
+                except:
+                    check = None
+                if check and int(check.id) != int(request.GET.get("edit")):
+                    context["warn_name"] = "当前工程已经存在, 工程名称变更错误"
+                    return render(request, "engineering/project_edit.html", context)
+                try:
+                    check = Project.objects.get(full_tag=form.cleaned_data["full_tag"])
+                except:
+                    check = None
+                if check and int(check.id) != int(request.GET.get("edit")):
+                    context["warn_tag"] = "当前工程标识已经被占用, 请重新指定一个有效的工程标识"
+                    return render(request, "engineering/project_edit.html", context)
+                form.save()
+                return render(request, "engineering/project.html", context)
         elif request.GET.get("add") != None:
             form = ProjectForm(request.POST)
             context = {
