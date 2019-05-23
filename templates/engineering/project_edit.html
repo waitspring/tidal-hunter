@@ -44,7 +44,8 @@
                     <div class="my-label-tag">工程运维负责人</div>
                     <div>{{ form.operator }}</div>
                     <div class="my-label-tag">工程添加日期</div>
-                    <div>{{ form.add_date }}</div><br><br>
+                    <div>{{ form.add_date }}</div>
+                    <div style="color: #FF0033">{{ form.add_date.errors }}</div><br><br>
                     <button class="my-submit" type="submit">提交</button>
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <a href="{% url 'project' %}?name={{ project.id }}">
@@ -84,7 +85,8 @@
                     <div class="my-label-tag">工程运维负责人</div>
                     <div>{{ form.operator }}</div>
                     <div class="my-label-tag">工程添加日期</div>
-                    <div>{{ form.add_date }}</div><br><br>
+                    <div>{{ form.add_date }}</div>
+                    <div style="color: #FF0033">{{ form.add_date.errors }}</div><br><br>
                     <button class="my-submit" type="submit">提交</button>
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <a href="{% url 'project' %}">

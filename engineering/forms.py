@@ -64,6 +64,18 @@ class ProjectForm(ModelForm):
             "add_date": DateInput(attrs={"class": "form-control my-input"})
         }
 
+    def clean_add_date(self):
+        """
+        we know that if a project has been owned by a production, its add_date must be after by production's add_date,
+        and in this function, we will check it
+        """
+        project_add_date = self.cleaned_data.get("add_date")
+        production_add_date = self.cleaned_data.get("production").add_date
+        if project_add_date < production_add_date:
+            raise ValidationError("日期输入错误, 工程开始日期不可能早于产品开始日期")
+        else:
+            return project_add_date
+
     def clean(self):
         """
         we need to deal the full_name and full_tag fields in the last clean function

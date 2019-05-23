@@ -170,8 +170,11 @@ def project(request):
                 if check and int(check.id) != int(request.GET.get("edit")):
                     context["warn_tag"] = "当前工程标识已经被占用, 请重新指定一个有效的工程标识"
                     return render(request, "engineering/project_edit.html", context)
+                # =====================================================================================================
                 form.save()
                 return render(request, "engineering/project.html", context)
+            else:
+                return render(request, "engineering/project_edit.html", context)
         elif request.GET.get("add") != None:
             form = ProjectForm(request.POST)
             context = {
@@ -195,6 +198,7 @@ def project(request):
                 if check:
                     context["warn_tag"] = "当前工程标识已经被占用, 请重新指定一个有效的工程标识"
                     return render(request, "engineering/project_edit.html", context)
+                # =====================================================================================================
                 form.save()
                 return HttpResponseRedirect(reverse("project"))
         else:
