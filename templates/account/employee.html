@@ -38,13 +38,13 @@
                 <tbody>
                     <tr>
                         <td style="width: 200px" align="center">员工姓名</td>
-                        <td style="width: 300px">{{ employee.nickname }}</td>
+                        <td>{{ employee.nickname }}</td>
                         <td style="width: 200px" align="center">工作岗位</td>
-                        <td style="width: 300px">
+                        <td>
                             {% if employee.sequence %}{{ employee.sequence }}{% else %}--{% endif %}
                         </td>
                         <td style="width: 200px" align="center">工作职级</td>
-                        <td style="width: 300px">
+                        <td>
                             {% if employee.grade %}{{ employee.grade }}{% else %}--{% endif %}
                         </td>
                     </tr>
@@ -120,6 +120,7 @@
                 </tbody>
             </table>
             {% endif %}
+            <!-- another project part -------------------------------------------------------------------------------->
             {% if tes_projects %}
             <h5 class="my-title-label">
                 <i class="fa fa-google-wallet fa-icon" aria-hidden="true"></i>
@@ -139,6 +140,7 @@
                 </tbody>
             </table>
             {% endif %}
+            <!-- another project part -------------------------------------------------------------------------------->
             {% if ops_projects %}
             <h5 class="my-title-label">
                 <i class="fa fa-google-wallet fa-icon" aria-hidden="true"></i>

@@ -76,6 +76,8 @@ def production(request):
                 # =====================================================================================================
                 form.save()
                 return render(request, "engineering/production.html", context)
+            else:
+                return render(request, "engineering/production_edit.html", context)
         elif request.GET.get("add") != None:
             form = ProductionForm(request.POST)
             context = {

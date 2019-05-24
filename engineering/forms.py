@@ -8,6 +8,7 @@ engineering.forms
 
 from django.forms import *
 from .models import Production, Project
+from engineering.models import Employee
 
 
 # =====================================================================================================================
@@ -31,6 +32,15 @@ class ProductionForm(ModelForm):
             "department": Select(attrs={"class": "form-control my-input"}),
             "add_date": DateInput(attrs={"class": "form-control my-input"})
         }
+
+    def clean_manager(self):
+        """
+        as a production manager, his sequence must be the PM
+        """
+        manager = self.cleaned_data["manager"]
+        if manager.sequence != "产品设计师":
+            raise ValidationError("产品经理选择错误, 请选择一个有效的产品经理")
+        return manager
 
 
 # =====================================================================================================================

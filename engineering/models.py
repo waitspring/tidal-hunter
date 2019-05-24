@@ -34,7 +34,7 @@ class Production(Model):
     user = CharField(lazy("产品用户"), choices=user_choices, max_length=30, blank=True, null=True)
 
     manager = ForeignKey(
-        Employee, verbose_name=lazy("产品经理"),
+        Employee, verbose_name=lazy("产品经理"), limit_choices_to={"sequence": "产品设计师"},
         max_length=30, blank=True, null=True, on_delete=SET_NULL
     )
     department = ForeignKey(
@@ -111,14 +111,17 @@ class Project(Model):
     )
     developer = ForeignKey(
         Employee, related_name=lazy("developer"), verbose_name=lazy("开发负责人"),
+        limit_choices_to={"sequence": "开发工程师"},
         max_length=30, blank=True, null=True, on_delete=SET_NULL
     )
     tester = ForeignKey(
         Employee, related_name=lazy("tester"), verbose_name=lazy("测试负责人"),
+        limit_choices_to={"sequence": "测试工程师"},
         max_length=30, blank=True, null=True, on_delete=SET_NULL
     )
     operator = ForeignKey(
         Employee, related_name=lazy("operator"), verbose_name=lazy("运维负责人"),
+        limit_choices_to={"sequence": "运维工程师"},
         max_length=30, blank=True, null=True, on_delete=SET_NULL
     )
 

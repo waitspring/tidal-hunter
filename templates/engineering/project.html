@@ -20,20 +20,20 @@
                 <tbody>
                     <tr>
                         <td width="200px" align="center">工程名称</td>
-                        <td width="300px">{{ project.full_name }}</td>
+                        <td>{{ project.full_name }}</td>
                         <td width="200px" align="center">工程标识</td>
-                        <td width="300px">{{ project.full_tag }}</td>
+                        <td>{{ project.full_tag }}</td>
                         <td width="200px" align="center">工程状态</td>
                         {% if "stay for online" in project.status %}
-                        <td width="300px" style="color: #268785"><strong>{{ project.status }}</strong></td>
+                        <td style="color: #268785"><strong>{{ project.status }}</strong></td>
                         {% elif "online" in project.status %}
-                        <td width="300px" style="color: #91AD70"><strong>{{ project.status }}</strong></td>
+                        <td style="color: #91AD70"><strong>{{ project.status }}</strong></td>
                         {% elif "stay for offline" in project.status %}
-                        <td width="300px" style="color: #6A4C9C"><strong>{{ project.status }}</strong></td>
+                        <td style="color: #6A4C9C"><strong>{{ project.status }}</strong></td>
                         {% elif "offline" in project.status %}
-                        <td width="300px" style="color: #FF0033"><strong>{{ project.status }}</strong></td>
+                        <td style="color: #FF0033"><strong>{{ project.status }}</strong></td>
                         {% else %}
-                        <td width="300px">--</td>
+                        <td>--</td>
                         {% endif %}
                     </tr>
                     <tr>

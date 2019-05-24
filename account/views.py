@@ -181,7 +181,10 @@ def myself(request):
             return render(request, "account/password_update.html", context)
         else:
             context = {
-                "productions": Production.objects.filter(manager=request.user)
+                "productions": Production.objects.filter(manager=request.user),
+                "dev_projects": Project.objects.filter(developer=request.user),
+                "tes_projects": Project.objects.filter(tester=request.user),
+                "ops_projects": Project.objects.filter(operator=request.user)
             }
             return render(request, "account/myself.html", context)
     elif request.method == "POST":

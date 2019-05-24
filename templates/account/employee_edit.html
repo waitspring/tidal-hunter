@@ -26,6 +26,7 @@
                     <div style="color: #FF0033">{{ form.phone.errors }}</div>
                     <div class="my-label-tag">工作岗位</div>
                     <div>{{ form.sequence }}</div>
+                    <div style="color: #FF0033">{{ form.sequence.errors }}</div>
                     <div class="my-label-tag">工作职级</div>
                     <div>{{ form.grade }}</div>
                     <div class="my-label-tag">个人学历</div>
@@ -38,7 +39,7 @@
                     <div>{{ form.add_date }}</div><br><br>
                     <button class="my-submit" type="submit">提交</button>
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <a href="{% url 'employee' %}">
+                    <a href="{% url 'employee' %}?name={{ employee.id }}">
                         <button class="my-cancel-submit" type="button">取消</button>
                     </a><br><br>
                 </form>

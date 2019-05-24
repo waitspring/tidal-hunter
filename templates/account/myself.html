@@ -28,13 +28,13 @@
                 <tbody>
                     <tr>
                         <td style="width: 200px" align="center">我的名字</td>
-                        <td style="width: 300px">{{ user.nickname }}</td>
+                        <td>{{ user.nickname }}</td>
                         <td style="width: 200px" align="center">工作岗位</td>
-                        <td style="width: 300px">
+                        <td>
                             {% if user.sequence %}{{ user.sequence }}{% else %}--{% endif %}
                         </td>
                         <td style="width: 200px" align="center">工作职级</td>
-                        <td style="width: 300px">
+                        <td>
                             {% if user.grade %}{{ user.grade }}{% else %}--{% endif %}
                         </td>
                     </tr>
@@ -70,7 +70,67 @@
                         <td style="width: 200px" align="center">
                             <a href="{% url 'production' %}?name={{ production.id }}">{{ production.name }}</a>
                         </td>
-                        <td style="word-break: break-all" width="100%">{{ production.description }}</td>
+                        <td style="word-break: break-all">{{ production.description }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            <!-- project information show if employee is a project engineer ------------------------------------------>
+            {% if dev_projects %}
+            <h5 class="my-title-label">
+                <i class="fa fa-google-wallet fa-icon" aria-hidden="true"></i>
+                <span>&nbsp;&nbsp;</span>
+                <span>主管开发</span>
+            </h5>
+            <table class="table table-hover">
+                <tbody>
+                    {% for project in dev_projects %}
+                    <tr>
+                        <td style="width: 200px" align="center">
+                            <a href="{% url 'project' %}?name={{ project.id }}">{{ project.full_name }}</a>
+                        </td>
+                        <td style="word-break: break-all">{{ project.description }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            <!-- another project part -------------------------------------------------------------------------------->
+            {% if tes_projects %}
+            <h5 class="my-title-label">
+                <i class="fa fa-google-wallet fa-icon" aria-hidden="true"></i>
+                <span>&nbsp;&nbsp;</span>
+                <span>主管测试</span>
+            </h5>
+            <table class="table table-hover">
+                <tbody>
+                    {% for project in tes_projects %}
+                    <tr>
+                        <td style="width: 200px" align="center">
+                            <a href="{% url 'project' %}?name={{ project.id }}">{{ project.full_name }}</a>
+                        </td>
+                        <td style="word-break: break-all">{{ project.description }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            <!-- another project part -------------------------------------------------------------------------------->
+            {% if ops_projects %}
+            <h5 class="my-title-label">
+                <i class="fa fa-google-wallet fa-icon" aria-hidden="true"></i>
+                <span>&nbsp;&nbsp;</span>
+                <span>主管运维</span>
+            </h5>
+            <table class="table table-hover">
+                <tbody>
+                    {% for project in ops_projects %}
+                    <tr>
+                        <td style="width: 200px" align="center">
+                            <a href="{% url 'project' %}?name={{ project.id }}">{{ project.full_name }}</a>
+                        </td>
+                        <td style="word-break: break-all">{{ project.description }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

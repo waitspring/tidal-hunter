@@ -50,8 +50,7 @@ class Employee(AbstractBaseUser):
         ("产品设计师", "产品设计师"),
         ("交互设计师", "交互设计师"),
         ("项目管理师", "项目管理师"),
-        ("前端工程师", "前端工程师"),
-        ("后端工程师", "后端工程师"),
+        ("开发工程师", "开发工程师"),
         ("数据工程师", "数据工程师"),
         ("测试工程师", "测试工程师"),
         ("运维工程师", "运维工程师"),
@@ -98,7 +97,7 @@ class Employee(AbstractBaseUser):
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = [
-        "nickname"
+        "nickname", "email"
     ]
 
     def get_short_name(self):

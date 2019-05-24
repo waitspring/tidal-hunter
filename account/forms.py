@@ -10,6 +10,7 @@ import re
 from django.forms import *
 from django.contrib import auth
 from .models import Employee, Department
+from engineering.models import Production, Project
 
 
 # =====================================================================================================================
@@ -175,6 +176,20 @@ class EmployeeEditForm(ModelForm):
                 if not re.match(r"^1[3456789].*", phone):
                     raise ValidationError("手机号码格式错误")
         return phone
+
+    def clean_sequence(self):
+        """
+        we need to notice that if some projects or some productions has been owned by him, he is can not be changed his
+        sequence information
+        """
+        sequence = self.cleaned_data["sequence"]
+        try:
+            productions = Production.objects.filter(manager=Employee.objects.get(username=self.cleaned_data["username"]))
+        except:
+            productions = None
+        if productions and sequence != Employee.objects.get(username=self.cleaned_data["username"]).sequence:
+            raise ValidationError("当前同事正在负责具体的产品或项目, 无法更新其工作序列")
+        return self.cleaned_data["sequence"]
 
 
 class PasswordControlForm(Form):
