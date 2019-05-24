@@ -11,7 +11,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.utils.translation import ugettext_lazy as lazy
-from engineering.models import Production
+from engineering.models import Production, Project
 from .forms import LoginForm, EmployeeAddForm, EmployeeEditForm, PasswordControlForm, PasswordEditForm, DepartmentForm
 from .models import Employee, Department
 
@@ -83,7 +83,10 @@ def employee(request):
         if request.GET.get("name") != None:
             context = {
                 "employee": Employee.objects.get(id=request.GET.get("name")),
-                "productions": Production.objects.filter(manager=request.GET.get("name"))
+                "productions": Production.objects.filter(manager=request.GET.get("name")),
+                "dev_projects": Project.objects.filter(developer=request.GET.get("name")),
+                "tes_projects": Project.objects.filter(tester=request.GET.get("name")),
+                "ops_projects": Project.objects.filter(operator=request.GET.get("name"))
             }
             return render(request, "account/employee.html", context)
         elif request.GET.get("edit") != None:
