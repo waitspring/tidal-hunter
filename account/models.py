@@ -126,6 +126,7 @@ class Department(models.Model):
     )
     header = ForeignKey(
         Employee, related_name="department_header", verbose_name=lazy("部门领导"),
+        limit_choices_to={"is_staff": False},
         max_length=30, blank=True, null=True, on_delete=SET_NULL
     )
 
