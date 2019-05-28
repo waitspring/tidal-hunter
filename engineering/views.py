@@ -21,8 +21,10 @@ def production(request):
     if request.method == "GET":
         if request.GET.get("name") != None:
             production = Production.objects.get(id=request.GET.get("name"))
+            projects = Project.objects.filter(production=request.GET.get("name"))
             context = {
-                "production": production
+                "production": production,
+                "projects": projects
             }
             return render(request, "engineering/production.html", context)
         elif request.GET.get("edit") != None:
