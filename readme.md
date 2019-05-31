@@ -20,6 +20,8 @@ hostname$ sudo pip3 install Pillow==5.1.0
 hostname$ sudo pip3 install Markdown==2.6.2
 hostname$ sudo pip3 install psycopg2==2.7.6.1
 hostname$ sudo pip3 install psycopg2-binary==2.7.7
+hostname$ sudo pip3 install djangorestframework==3.1.3
+hostname$ sudo pip3 install django-filter==0.10.0
 ```
 
 此外，我们还应当检查项目数据库环境的准备情况  

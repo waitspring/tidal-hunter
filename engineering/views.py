@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from .forms import ProductionForm, ProjectForm
 from .models import Production, Project
+from .deploy_utils import Job
 
 
 # =====================================================================================================================
