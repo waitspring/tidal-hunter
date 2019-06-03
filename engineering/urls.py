@@ -3,7 +3,7 @@
 
 
 from django.conf.urls import url
-from .views import production, project
+from .views import production, project, deploy
 
 
 # =====================================================================================================================
@@ -11,5 +11,6 @@ from .views import production, project
 # =====================================================================================================================
 urlpatterns = [
     url(r"^productions/$", production, name="production"),
-    url(r"^projects/$", project, name="project")
+    url(r"^projects/$", project, name="project"),
+    url(r"^cicd/$", deploy, name="deploy")
 ]

@@ -1,0 +1,149 @@
+{% extends "myFire.html" %}
+{% block content %}
+<section class="my-content">
+    <div class="col-md-5">
+        <div class="panel panel-default my-panel">
+            <div class="panel-body my-panel-body">
+                <!-- projects list ----------------------------------------------------------------------------------->
+                <table id="projects_list" class="table table-bordered table-hover" style="width: 100%">
+                    <thead style="user-select: none">
+                        <tr>
+                            <td style="text-align: center">工程名称</td>
+                            <td style="text-align: center">工程标识</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in projects %}
+                        <tr>
+                            <td><a href="{% url 'deploy' %}?name={{ project.id }}">{{ project.full_name }}</a></td>
+                            <td>{{ project.full_tag }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- bootstrap data table init ----------------------------------------------------------------------->
+                <script type="text/javascript">
+                    $("#projects_list").DataTable(
+                        {
+                            "info": true,
+                            "ordering": false,
+                            "paging": false,
+                            "searching": true,
+                            "stateSave": true,
+                            "language": {
+                                "info": "工程列表",
+                                "zeroRecords": "没有匹配到任何结果",
+                                "infoEmpty": "没有数据",
+                                "search": "检索",
+                            },
+                            "scrollY": 580
+                        }
+                    )
+                </script>
+            </div>
+        </div>
+    </div>
+    {% if project %}
+    <div class="col-md-7" style="margin: 0px; padding: 0px">
+        <div class="panel panel-default my-panel">
+            <div class="panel-body my-panel-body">
+                <h4 style="color: #70649A"><strong>{{ project.full_name }}</strong></h4><hr>
+                <ul style="color: #666666; line-height: 30px">
+                    {% if project.developer %}
+                    <li>
+                        <span>该工程的开发负责人为{{ project.developer }},&nbsp;&nbsp;&nbsp;联系电话&nbsp;&nbsp;</span>
+                        <span>{{ project.developer.phone }}</span>
+                    </li>
+                    {% endif %}
+                    {% if project.description %}
+                    <li>{{ project.description }}</li>
+                    {% endif %}
+                </ul><br>
+                <!-- the cicd table ---------------------------------------------------------------------------------->
+                <table class="table table-bordered text-center">
+                    <tbody>
+                        <tr>
+                            <td>工作环境</td>
+                            <td>测试环境</td>
+                            <td>预发布环境</td>
+                            <td>灰度环境</td>
+                            <td>生产环境</td>
+                        </tr>
+                        <tr>
+                            <td style="line-height: 36px">工作构建</td>
+                            <td><a href="">
+                                {% if "red" in test_job.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/red.png">
+                                {% elif "blue" in test_job.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/blue.png">
+                                {% elif "notbuilt" in test_job.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/notbuilt.png">
+                                {% else %}{% endif %}
+                            </a></td>
+                            <td><a href="">
+                                {% if "red" in prelease_job.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/red.png">
+                                {% elif "blue" in prelease_job.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/blue.png">
+                                {% elif "notbuilt" in prelease_job.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/notbuilt.png">
+                                {% else %}{% endif %}
+                            </a></td>
+                            <td><a href="">
+                                {% if "red" in gray_job.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/red.png">
+                                {% elif "blue" in gray_job.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/blue.png">
+                                {% elif "notbuilt" in gray_job.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/notbuilt.png">
+                                {% else %}{% endif %}
+                            </a></td>
+                            <td><a href="">
+                                {% if "red" in prod_job.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/red.png">
+                                {% elif "blue" in prod_job.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/blue.png">
+                                {% elif "notbuilt" in prod_job.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/notbuilt.png">
+                                {% else %}{% endif %}
+                            </a></td>
+                        </tr>
+                        <tr>
+                            <td>构建次数</td>
+                            <td>
+                                {% if test_job.lastBuild.number %}
+                                <a href="">{{ test_job.lastBuild.number }}</a>
+                                {% else %}
+                                <a href="">新建工作</a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if prelease_job.lastBuild.number %}
+                                <a href="">{{ prelease_job.lastBuild.number }}</a>
+                                {% else %}
+                                <a href="">新建工作</a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if gray_job.lastBuild.number %}
+                                <a href="">{{ gray_job.lastBuild.number }}</a>
+                                {% else %}
+                                <a href="">新建工作</a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if prod_job.lastBuild.number %}
+                                <a href="">{{ prod_job.lastBuild.number }}</a>
+                                {% else %}
+                                <a href="">新建工作</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

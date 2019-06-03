@@ -139,3 +139,7 @@ a.my-update-link:hover {
     background-color: #FF0033;
     color: #FFF;
 }
+
+img.my-job-status {
+    height: 36px;
+}

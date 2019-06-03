@@ -72,7 +72,9 @@ class Job:
         else:
             eror("parameter passing error, location to engineering.deploy_utils.Job.get_job_info")
             return None
-        # there are some errors ***************************************************************************************
-        info = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()
-        info = json.loads(info)
+        try:
+            info = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()
+            info = json.loads(info)
+        except:
+            info = None
         return info

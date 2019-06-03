@@ -210,3 +210,33 @@ def project(request):
             return HttpResponseBadRequest(content="POST 错误 *** 错误定位到 engineering.views.project")
     else:
         return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views.project")
+
+
+# =====================================================================================================================
+# deploy list view function
+# =====================================================================================================================
+@login_required()
+def deploy(request):
+    if request.method == "GET":
+        if request.GET.get("name") != None:
+            projects = Project.objects.all()
+            project = Project.objects.get(id=request.GET.get("name"))
+            job = Job(project)
+            context = {
+                "projects": projects,
+                "project": project,
+                "test_job": job.get_info("test") if job.get_info("test") else None,
+                "prelease_job": job.get_info("prelease") if job.get_info("prelease") else None,
+                "gray_job": job.get_info("gray") if job.get_info("gray") else None,
+                "prod_job": job.get_info("prod") if job.get_info("prod") else None
+            }
+            return render(request, "engineering/deploy.html", context)
+        else:
+            context = {
+                "projects": Project.objects.all()
+            }
+            return render(request, "engineering/deploy.html", context)
+    elif request.method == "POST":
+        pass
+    else:
+        return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views")
