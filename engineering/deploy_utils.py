@@ -2,13 +2,20 @@
 # -*- coding: utf-8 -*-
 
 """
-jenkins_utils.py
+deploy_utils.py
 
 we use the python-jenkins package as our utils file, this file would support some functions for our deploy.views file
+
+please attention that: the python-jenkins package can be used in the python language but not python3, we need to change
+our choices in the CICD way
+
+this is the jenkins office document say:"In Python 2.6 or later you can safely parse this output using
+ast.literal_eval(urllib.urlopen("...").read())"
 """
 
 import configparser
-from jenkins import Jenkins, JenkinsException
+import subprocess
+import json
 from tidal.utils import *
 
 
@@ -41,48 +48,31 @@ class Job:
             * name           the jenkins job name, one project's all jobs will be named by same
         """
         self.name = project.full_tag
-        try:
-            self.test_session = Jenkins(self._TEST_URI, self._TEST_USERNAME, self._TEST_PASSWORD)
-            info("make the session with the test environment jenkins host: " + self._TEST_URI)
-        except:
-            warn("can not make the session with test environment jenkins host: " + self._TEST_URI)
-            self.test_session = None
-        try:
-            self.prelease_session = Jenkins(self._PRELEASE_URI, self._PRELEASE_USERNAME, self._PRELEASE_PASSWORD)
-            info("make the session with the pre-release environment jenkins host: " + self._PRELEASE_URI)
-        except:
-            warn("can not make the session with pre-release environment jenkins host: " + self._PRELEASE_URI)
-            self.prelease_session = None
-        try:
-            self.gray_session = Jenkins(self._GRAY_URI, self._GRAY_USERNAME, self._GRAY_PASSWORD)
-            info("make the session with the gray environment jenkins host: " + self._GRAY_URI)
-        except:
-            warn("can not make the session with gray environment jenkins host: " + self._GRAY_URI)
-            self.gray_session = None
-        try:
-            self.prod_session = Jenkins(self._PROD_URI, self._PROD_USERNAME, self._PROD_PASSWORD)
-            info("make the session with the production environment jenkins host: " + self._PROD_URI)
-        except:
-            warn("can not make the session with production environment jenkins host: " + self._PROD_URI)
-            self.prod_session = None
 
     def get_info(self, env):
         """
         get the job information which has been constructed in env
         """
         if env == "test":
-            try:
-                info = self.test_session.get_job_info(self.name)
-                return info
-            except JenkinsException as error:
-                eror("can not find the job " + self.name + " in the test environment jenkins host")
-                return None
+            command = "bash scripts/deploy_utils/get_job_info.sh %s %s %s %s" % (
+                self._TEST_URI, self._TEST_USERNAME, self._TEST_PASSWORD, self.name
+            )
         elif env == "prelease":
-            pass
+            command = "bash scripts/deploy_utils/get_job_info.sh %s %s %s %s" % (
+                self._PRELEASE_URI, self._PRELEASE_USERNAME, self._PRELEASE_PASSWORD, self.name
+            )
         elif env == "gray":
-            pass
+            command = "bash scripts/deploy_utils/get_job_info.sh %s %s %s %s" % (
+                self._GRAY_URI, self._GRAY_USERNAME, self._GRAY_PASSWORD, self.name
+            )
         elif env == "prod":
-            pass
+            command = "bash scripts/deploy_utils/get_job_info.sh %s %s %s %s" % (
+                self._PROD_URI, self._PROD_USERNAME, self._PROD_PASSWORD, self.name
+            )
         else:
             eror("parameter passing error, location to engineering.deploy_utils.Job.get_job_info")
             return None
+        # there are some errors ***************************************************************************************
+        info = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()
+        info = json.loads(info)
+        return info
