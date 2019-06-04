@@ -54,19 +54,19 @@ class Job:
         get the job information which has been constructed in env
         """
         if env == "test":
-            command = "bash scripts/deploy_utils/get_job_info.sh %s %s %s %s" % (
+            command = "bash scripts/get_job_info.sh %s %s %s %s" % (
                 self._TEST_URI, self._TEST_USERNAME, self._TEST_PASSWORD, self.name
             )
         elif env == "prelease":
-            command = "bash scripts/deploy_utils/get_job_info.sh %s %s %s %s" % (
+            command = "bash scripts/get_job_info.sh %s %s %s %s" % (
                 self._PRELEASE_URI, self._PRELEASE_USERNAME, self._PRELEASE_PASSWORD, self.name
             )
         elif env == "gray":
-            command = "bash scripts/deploy_utils/get_job_info.sh %s %s %s %s" % (
+            command = "bash scripts/get_job_info.sh %s %s %s %s" % (
                 self._GRAY_URI, self._GRAY_USERNAME, self._GRAY_PASSWORD, self.name
             )
         elif env == "prod":
-            command = "bash scripts/deploy_utils/get_job_info.sh %s %s %s %s" % (
+            command = "bash scripts/get_job_info.sh %s %s %s %s" % (
                 self._PROD_URI, self._PROD_USERNAME, self._PROD_PASSWORD, self.name
             )
         else:
