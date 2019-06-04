@@ -3,27 +3,10 @@
 ![python3](https://img.shields.io/badge/python3-3.6.7-336699.svg)
 ![django](https://img.shields.io/badge/django-1.11.18-FF0033.svg)
 
-> 这是一个符合 devops 理念的自动化运维平台项目
-
-### 目录结构
-##### [account/](https://github.com/waitspring/tidal-hunter/tree/master/account)
-平台账户相关的功能应用
-##### [board/](https://github.com/waitspring/tidal-hunter/tree/master/board)
-平台首页面板相关的功能应用，对应到平台的侧边导航栏为数据看板功能
-##### [engineering/](https://github.com/waitspring/tidal-hunter/tree/master/engineering)
-平台项目管理相关的功能应用，对应到平台的侧边导航栏为项目管理功能
-##### [static/](https://github.com/waitspring/tidal-hunter/tree/master/static)
-存放潮汐猎人项目中，需要用到的所有静态资源文件  
-##### [templates/](https://github.com/waitspring/tidal-hunter/tree/master/templates)
-存放潮汐猎人项目中，所有的 html5 网页模板资源文件，该目录下的子目录和各个应用模块对应  
-##### [tide/](https://github.com/waitspring/tidal-hunter/tree/master/tide)
-潮汐猎人项目的根配置文件，符合 django 框架标准，存放 settings.py urls.py wsgi.py 等文件  
-##### [hunter.py](https://github.com/waitspring/tidal-hunter/blob/master/hunter.py)
-潮汐猎人的项目管理文件，和普通 django 项目中的 manage.py 文件起相同的作用
 
 ### 书写规范
-在潮汐猎人项目的源码文件中，我们将严格按照以下书写规范  
-
+<font color=gray size=3>在潮汐猎人项目中，我们使用中文文字来编写所有的 readme.md 文件，并使用英文文字来编写所有的源代码文件</font>  
+<font color=gray size=3>其中，源代码文件严格遵守如下规范</font>  
 
 <table>
     <tbody>
@@ -74,21 +57,3 @@
         </tr>
     </tbody>
 </table>
-
-
-此外，我们的 readme.md 文件将使用中文书写，而源码文件中的注释部分，则使用英文书写
-
-### 其他说明
-  
-tidal hunter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;n.&nbsp;&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;潮汐猎人  
-  
-tidal hunter 是经典电子竞技游戏 dota 中的一个英雄名称，中国玩家称呼这个英雄为潮汐猎人，简称潮汐  
-潮汐猎人在 dota 游戏中的定位是控制和辅助，能够承担战场伤害，同时控制对方英雄，为队友创造输出环境  
-这样的游戏定位和 devops 平台在软件项目开发过程中的定位很类似  
-  
-潮汐猎人仍然会使用传统的 mvc 开发架构  
-其中所反映出的项目管理流程理念和功能模块的划分规则来自于我个人长期任职的八戒元创运维开发团队  
-此外，潮汐猎人还借鉴了 github 上已有的自动化运维项目 [adminset](https://github.com/guohongze/adminset)  
-  
-关于潮汐猎人的任何疑问，都可以发送邮件到 newsfuxuanming@foxmail.com 来和我沟通  
-如果对 django 的基本知识缺乏了解，我们建议可以先查阅 [scrum](https://github.com/waitspring/scrum) 项目
