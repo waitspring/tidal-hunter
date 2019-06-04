@@ -1,5 +1,6 @@
 # document
-![version](https://img.shields.io/badge/architecture-C/S/O-DAC9A6.svg)
+![version](https://img.shields.io/badge/architecture-CSO-DAC9A6.svg)
+
 
 ### 环境说明
 对于标准的 devops 流程而言，工程上线通常会经历如下几个环境  

@@ -5,26 +5,17 @@
   
   
 ### 项目导航
-##### [compass](https://github.com/waitspring/tidal-hunter/compass.md)
-潮汐猎人项目的服务端和客户端搭建指南  
-##### [document](https://github.com/waitspring/tidal-hunter/document.md)
-潮汐猎人项目的理念和布局说明，在搭建潮汐猎人工具之前，强烈建议各位同学查看该文档，并按照文档指导配置各项第三方工具  
-##### [account](https://github.com/waitspring/tidal-hunter/account)
-潮汐猎人项目中，和用户管理相关的后端源文件目录
-##### [board](https://github.com/waitspring/tidal-hunter/board)
-潮汐猎人项目中，和首页统计面板相关的后端源文件目录
-##### [engineering](https://github.com/waitspring/tidal-hunter/engineering)
-潮汐猎人项目中，和项目管理相关的后端源文件目录
-##### [scripts](https://github.com/waitspring/tidal-hunter/scripts)
-潮汐猎人的 `shell` 脚本目录，这些脚本在后端源文件中被调用
-##### [static](https://github.com/waitspring/tidal-hunter/static)
-潮汐猎人的静态资源目录
-##### [templates](https://github.com/waitspring/tidal-hunter/templates)
-潮汐猎人的 `html5` 模板文件目录
-##### [tidal](https://github.com/waitspring/tidal-hunter/tidal)
-潮汐猎人的根应用目录
++ [compass](https://github.com/waitspring/tidal-hunter/blob/master/compass.md)：服务端和客户端搭建指南  
++ [document](https://github.com/waitspring/tidal-hunter/blob/master/document.md)：架构理念和布局说明，建议优先查看该文档并配置相应的第三方工具
++ [account](https://github.com/waitspring/tidal-hunter/tree/master/account)：和用户管理相关的后端源文件目录
++ [board](https://github.com/waitspring/tidal-hunter/tree/master/board)：潮汐猎人项目中，和首页统计面板相关的后端源文件目录
++ [engineering](https://github.com/waitspring/tidal-hunter/tree/master/engineering)：潮汐猎人项目中，和项目管理相关的后端源文件目录
++ [scripts](https://github.com/waitspring/tidal-hunter/tree/master/scripts)：潮汐猎人的 `shell` 脚本目录，这些脚本在后端源文件中被调用
++ [static](https://github.com/waitspring/tidal-hunter/tree/master/static)：潮汐猎人的静态资源目录
++ [templates](https://github.com/waitspring/tidal-hunter/tree/master/templates)：潮汐猎人的 `html5` 模板文件目录
++ [tidal](https://github.com/waitspring/tidal-hunter/tree/master/tidal)：潮汐猎人的根应用目录
   
-  
+
 ### 书写规范
 在潮汐猎人项目中，我们使用中文文字来编写所有的 readme.md 文件，并使用英文文字来编写所有的源代码文件  
 其中，源代码文件严格遵守如下规范  
