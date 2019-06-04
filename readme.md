@@ -4,10 +4,11 @@
 ![django](https://img.shields.io/badge/django-1.11.18-FF0033.svg)
 
 
-### 书写规范
-<font color=gray size=3>在潮汐猎人项目中，我们使用中文文字来编写所有的 readme.md 文件，并使用英文文字来编写所有的源代码文件</font>  
-<font color=gray size=3>其中，源代码文件严格遵守如下规范</font>  
+#### 书写规范
+在潮汐猎人项目中，我们使用中文文字来编写所有的 readme.md 文件，并使用英文文字来编写所有的源代码文件  
+其中，源代码文件严格遵守如下规范  
 
+   
 <table>
     <tbody>
         <tr>
@@ -57,3 +58,5 @@
         </tr>
     </tbody>
 </table>
+   
+
