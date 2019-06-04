@@ -42,17 +42,9 @@ class Job:
     _PROD_PASSWORD     = file.get("jenkins configure", "PROD_JENKINS_PASSWORD")
 
     def __init__(self, project):
-        """
-        we define some fields like this:
-
-            * name           the jenkins job name, one project's all jobs will be named by same
-        """
         self.name = project.full_tag
 
     def get_info(self, env):
-        """
-        get the job information which has been constructed in env
-        """
         if env == "test":
             command = "bash scripts/get_job_info.sh %s %s %s %s" % (
                 self._TEST_URI, self._TEST_USERNAME, self._TEST_PASSWORD, self.name
@@ -76,5 +68,6 @@ class Job:
             info = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()
             info = json.loads(info)
         except:
+            warn("send the request into " + self.env + " jenkins host failure")
             info = None
         return info

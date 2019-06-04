@@ -110,34 +110,10 @@
                         </tr>
                         <tr>
                             <td>构建次数</td>
-                            <td>
-                                {% if test_job.lastBuild.number %}
-                                <a href="">{{ test_job.lastBuild.number }}</a>
-                                {% else %}
-                                <a href="">新建工作</a>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if prelease_job.lastBuild.number %}
-                                <a href="">{{ prelease_job.lastBuild.number }}</a>
-                                {% else %}
-                                <a href="">新建工作</a>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if gray_job.lastBuild.number %}
-                                <a href="">{{ gray_job.lastBuild.number }}</a>
-                                {% else %}
-                                <a href="">新建工作</a>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if prod_job.lastBuild.number %}
-                                <a href="">{{ prod_job.lastBuild.number }}</a>
-                                {% else %}
-                                <a href="">新建工作</a>
-                                {% endif %}
-                            </td>
+                            <td><a href="">{{ test_job.lastBuild.number }}</a></td>
+                            <td><a href="">{{ prelease_job.lastBuild.number }}</a></td>
+                            <td><a href="">{{ gray_job.lastBuild.number }}</a></td>
+                            <td><a href="">{{ prod_job.lastBuild.number }}</a></td>
                         </tr>
                     </tbody>
                 </table>

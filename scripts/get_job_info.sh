@@ -31,5 +31,11 @@ function eror()
 # =====================================================================================================================
 # make the request to jenkins rest-api
 # =====================================================================================================================
+if [ ${#} -ne 4 ]; then
+    eror "parameters number error, please check the calling command"
+    warn "script exit with status 1"
+    exit 1
+fi
+
 URI="${1}/job/${4}/api/json?pretty=true"
 curl -X GET ${URI} --user ${2}:${3}
