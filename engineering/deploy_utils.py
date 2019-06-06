@@ -68,6 +68,6 @@ class Job:
             info = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()
             info = json.loads(info)
         except:
-            warn("send the request into " + self.env + " jenkins host failure")
+            warn("send the request into " + env + " jenkins host failure")
             info = None
         return info

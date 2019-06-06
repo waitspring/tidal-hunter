@@ -2,9 +2,9 @@
 # this is other tools' parameters configure file
 
 [jenkins configure]
-TEST_JENKINS_URI =
-TEST_JENKINS_USERNAME =
-TEST_JENKINS_PASSWORD =
+TEST_JENKINS_URI = http://192.168.25.95:8080/jenkins/
+TEST_JENKINS_USERNAME = fuxuanming
+TEST_JENKINS_PASSWORD = Huangxiaoqian93
 
 PRELEASE_JENKINS_URI =
 PRELEASE_JENKINS_USERNAME =

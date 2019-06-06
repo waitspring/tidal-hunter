@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+    <actions/>
+    <!-- POINT_1: the project job description -->
+    <description>POINT_1</description>
+    <keepDependencies>false</keepDependencies>
+    <properties>
+        <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.4.7">
+            <gitLabConnection>Gitlab</gitLabConnection>
+        </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
+    </properties>
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@3.5.1">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+            <hudson.plugins.git.UserRemoteConfig>
+                <!-- POINT_2: the project's gitlab url -->
+                <url>POINT_2</url>
+                <!-- POINT_3: the project's secret gitlab deploy key -->
+                <credentialsId>POINT_3</credentialsId>
+            </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+            <hudson.plugins.git.BranchSpec>
+                <name>*/master</name>
+            </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="list"/>
+        <extensions/>
+    </scm>
+    <canRoam>true</canRoam>
+    <disabled>false</disabled>
+    <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+    <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    <triggers/>
+    <concurrentBuild>false</concurrentBuild>
+    <builders>
+        <hudson.tasks.Maven>
+            <targets>clean install -U -DskipTests</targets>
+            <mavenName>maven3.3.9</mavenName>
+            <usePrivateRepository>false</usePrivateRepository>
+            <settings class="jenkins.mvn.DefaultSettingsProvider"/>
+            <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+            <injectBuildVariables>false</injectBuildVariables>
+        </hudson.tasks.Maven>
+    </builders>
+    <publishers>
+        <jenkins.plugins.publish__over__ssh.BapSshPublisherPlugin plugin="publish-over-ssh@1.17">
+            <consolePrefix>SSH: </consolePrefix>
+            <delegate>
+                <publishers>
+                    <jenkins.plugins.publish__over__ssh.BapSshPublisher>
+                        <!-- POINT_4: choice your target host -->
+                        <configName>POINT_4</configName>
+                        <verbose>false</verbose>
+                        <transfers>
+                            <jenkins.plugins.publish__over__ssh.BapSshTransfer>
+                                <!-- 模板改动点(5): 归档主机 POINT_4 上的文件归档目录, 即将构建好的 java 包归档到哪个目录下 -->
+                                <remoteDirectory>POINT_5</remoteDirectory>
+                                <!-- 模板改动点(6): 指定 jenkins 主机上需要归档的源文件 -->
+                                <sourceFiles>POINT_6</sourceFiles>
+                                <excludes></excludes>
+                                <!-- 模板改动点(7): 在归档过程中移除多余路径 -->
+                                <removePrefix>POINT_7</removePrefix>
+                                <remoteDirectorySDF>false</remoteDirectorySDF>
+                                <flatten>false</flatten>
+                                <cleanRemote>false</cleanRemote>
+                                <noDefaultExcludes>false</noDefaultExcludes>
+                                <makeEmptyDirs>false</makeEmptyDirs>
+                                <patternSeparator>[, ]+</patternSeparator>
+                                <execCommand></execCommand>
+                                <execTimeout>120000</execTimeout>
+                                <usePty>false</usePty>
+                                <useAgentForwarding>false</useAgentForwarding>
+                            </jenkins.plugins.publish__over__ssh.BapSshTransfer>
+                        </transfers>
+                        <useWorkspaceInPromotion>false</useWorkspaceInPromotion>
+                        <usePromotionTimestamp>false</usePromotionTimestamp>
+                    </jenkins.plugins.publish__over__ssh.BapSshPublisher>
+                </publishers>
+                <continueOnError>false</continueOnError>
+                <failOnError>false</failOnError>
+                <alwaysPublishFromMaster>false</alwaysPublishFromMaster>
+                <hostConfigurationAccess class="jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin" reference="../.."/>
+            </delegate>
+        </jenkins.plugins.publish__over__ssh.BapSshPublisherPlugin>
+    </publishers>
+    <buildWrappers/>
+</project>

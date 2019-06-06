@@ -225,10 +225,12 @@ def deploy(request):
             context = {
                 "projects": projects,
                 "project": project,
-                "test_job": job.get_info("test") if job.get_info("test") else None,
-                "prelease_job": job.get_info("prelease") if job.get_info("prelease") else None,
-                "gray_job": job.get_info("gray") if job.get_info("gray") else None,
-                "prod_job": job.get_info("prod") if job.get_info("prod") else None
+                "jobs": [
+                    job.get_info("test") if job.get_info("test") else None,
+                    job.get_info("prelease") if job.get_info("prelease") else None,
+                    job.get_info("gray") if job.get_info("gray") else None,
+                    job.get_info("prod") if job.get_info("prod") else None
+                ]
             }
             return render(request, "engineering/deploy.html", context)
         else:
