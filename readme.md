@@ -6,6 +6,7 @@
   
 ### 项目导航
 + [compass](https://github.com/waitspring/tidal-hunter/blob/master/compass.md)：服务端和客户端搭建指南  
++ [document](https://github.com/waitspring/tidal-hunter/blob/master/document.md)：devops 平台的一般架构理念和潮汐猎人的标准架构设计说明
 + [account](https://github.com/waitspring/tidal-hunter/tree/master/account)：和用户管理相关的后端源文件目录
 + [board](https://github.com/waitspring/tidal-hunter/tree/master/board)：潮汐猎人项目中，和首页统计面板相关的后端源文件目录
 + [engineering](https://github.com/waitspring/tidal-hunter/tree/master/engineering)：潮汐猎人项目中，和项目管理相关的后端源文件目录
