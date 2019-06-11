@@ -25,46 +25,118 @@ class Job:
     """
     file = configparser.ConfigParser()
     file.read("config")
-    _TEST_URI          = file.get("jenkins configure", "TEST_JENKINS_URI")
-    _TEST_USERNAME     = file.get("jenkins configure", "TEST_JENKINS_USERNAME")
-    _TEST_PASSWORD     = file.get("jenkins configure", "TEST_JENKINS_PASSWORD")
-    _PRELEASE_URI      = file.get("jenkins configure", "PRELEASE_JENKINS_URI")
-    _PRELEASE_USERNAME = file.get("jenkins configure", "PRELEASE_JENKINS_USERNAME")
-    _PRELEASE_PASSWORD = file.get("jenkins configure", "PRELEASE_JENKINS_PASSWORD")
-    _GRAY_URI          = file.get("jenkins configure", "GRAY_JENKINS_URI")
-    _GRAY_USERNAME     = file.get("jenkins configure", "GRAY_JENKINS_USERNAME")
-    _GRAY_PASSWORD     = file.get("jenkins configure", "GRAY_JENKINS_PASSWORD")
-    _PROD_URI          = file.get("jenkins configure", "PROD_JENKINS_URI")
-    _PROD_USERNAME     = file.get("jenkins configure", "PROD_JENKINS_USERNAME")
-    _PROD_PASSWORD     = file.get("jenkins configure", "PROD_JENKINS_PASSWORD")
+
+    _TEST_JENKINS_URI          = file.get("jenkins configure", "TEST_JENKINS_URI")
+    _TEST_JENKINS_USERNAME     = file.get("jenkins configure", "TEST_JENKINS_USERNAME")
+    _TEST_JENKINS_PASSWORD     = file.get("jenkins configure", "TEST_JENKINS_PASSWORD")
+    _PRELEASE_JENKINS_URI      = file.get("jenkins configure", "PRELEASE_JENKINS_URI")
+    _PRELEASE_JENKINS_USERNAME = file.get("jenkins configure", "PRELEASE_JENKINS_USERNAME")
+    _PRELEASE_JENKINS_PASSWORD = file.get("jenkins configure", "PRELEASE_JENKINS_PASSWORD")
+    _GRAY_JENKINS_URI          = file.get("jenkins configure", "GRAY_JENKINS_URI")
+    _GRAY_JENKINS_USERNAME     = file.get("jenkins configure", "GRAY_JENKINS_USERNAME")
+    _GRAY_JENKINS_PASSWORD     = file.get("jenkins configure", "GRAY_JENKINS_PASSWORD")
+    _PROD_JENKINS_URI          = file.get("jenkins configure", "PROD_JENKINS_URI")
+    _PROD_JENKINS_USERNAME     = file.get("jenkins configure", "PROD_JENKINS_USERNAME")
+    _PROD_JENKINS_PASSWORD     = file.get("jenkins configure", "PROD_JENKINS_PASSWORD")
+
+    _TEST_SYNC_ADDR            = file.get("sync configure", "TEST_SYNC_ADDR")
+    _TEST_SYNC_USERNAME        = file.get("sync configure", "TEST_SYNC_USERNAME")
+    _PRELEASE_SYNC_ADDR        = file.get("sync configure", "PRELEASE_SYNC_ADDR")
+    _PRELEASE_SYNC_USERNAME    = file.get("sync configure", "PRELEASE_SYNC_USERNAME")
+    _GRAY_SYNC_ADDR            = file.get("sync configure", "GRAY_SYNC_ADDR")
+    _GRAY_SYNC_USERNAME        = file.get("sync configure", "GRAY_SYNC_USERNAME")
+    _PROD_SYNC_ADDR            = file.get("sync configure", "PROD_SYNC_ADDR")
+    _PROD_SYNC_USERNAME        = file.get("sync configure", "PROD_SYNC_USERNAME")
 
     def __init__(self, project):
         self.name = project.full_tag
+        self.description = project.description
+        self.git_source = project.git_source
+        self.arch = project.arch
 
     def get_info(self, env):
         if env == "test":
             command = "bash scripts/get_job_info.sh %s %s %s %s" % (
-                self._TEST_URI, self._TEST_USERNAME, self._TEST_PASSWORD, self.name
+                self._TEST_JENKINS_URI, self._TEST_JENKINS_USERNAME, self._TEST_JENKINS_PASSWORD, self.name
             )
         elif env == "prelease":
             command = "bash scripts/get_job_info.sh %s %s %s %s" % (
-                self._PRELEASE_URI, self._PRELEASE_USERNAME, self._PRELEASE_PASSWORD, self.name
+                self._PRELEASE_JENKINS_URI, self._PRELEASE_JENKINS_USERNAME, self._PRELEASE_JENKINS_PASSWORD, self.name
             )
         elif env == "gray":
             command = "bash scripts/get_job_info.sh %s %s %s %s" % (
-                self._GRAY_URI, self._GRAY_USERNAME, self._GRAY_PASSWORD, self.name
+                self._GRAY_JENKINS_URI, self._GRAY_JENKINS_USERNAME, self._GRAY_JENKINS_PASSWORD, self.name
             )
         elif env == "prod":
             command = "bash scripts/get_job_info.sh %s %s %s %s" % (
-                self._PROD_URI, self._PROD_USERNAME, self._PROD_PASSWORD, self.name
+                self._PROD_JENKINS_URI, self._PROD_JENKINS_USERNAME, self._PROD_JENKINS_PASSWORD, self.name
             )
         else:
-            eror("parameter passing error, location to engineering.deploy_utils.Job.get_job_info")
+            eror("parameter passing error, location to engineering.deploy_utils.Job.get_info")
             return None
         try:
             info = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()
             info = json.loads(info)
         except:
             warn("send the request into " + env + " jenkins host failure")
+            info = None
+        return info
+
+    def create_job(self, env):
+        if env == "test":
+            if self.arch == "dubbo":
+                with open("scripts/template_dubbo.xml", 'r') as config:
+                    config = config.read()
+                    config = config.replace("POINT_1", self.description)
+                    config = config.replace("POINT_2", self.git_source)
+                    config = config.replace("POINT_3", "./" + self.name)
+                    config = config.replace("POINT_4", "target/*.war")
+                    config = config.replace("POINT_5", "target")
+                with open("scripts/config.xml", 'w') as output:
+                    output.write(config)
+                command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
+                    self._TEST_JENKINS_URI,
+                    self._TEST_JENKINS_USERNAME,
+                    self._TEST_JENKINS_PASSWORD,
+                    self.name,
+                    self._TEST_SYNC_USERNAME,
+                    self._TEST_SYNC_ADDR
+                )
+            elif self.arch == "nodejs":
+                pass
+            else:
+                warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
+                return None
+        elif env == "prelease":
+            if self.arch == "dubbo":
+                pass
+            elif self.arch == "nodejs":
+                pass
+            else:
+                warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
+                return None
+        elif env == "gray":
+            if self.arch == "dubbo":
+                pass
+            elif self.arch == "nodejs":
+                pass
+            else:
+                warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
+                return None
+        elif env == "prod":
+            if self.arch == "dubbo":
+                pass
+            elif self.arch == "nodejs":
+                pass
+            else:
+                warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
+                return None
+        else:
+            eror("parameter passing error, location to engineering.deploy_utils.Job.create_job")
+            return None
+        try:
+            info = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()
+            print(info)                                              # showing as a logging tee
+        except:
             info = None
         return info

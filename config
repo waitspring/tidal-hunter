@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# this is other tools' parameters configure file
+# this is other tools' parameters configure file, please attention: the tidal-hunter server need your ssh secret key to
+# login some hosts
 
 [jenkins configure]
 TEST_JENKINS_URI = http://192.168.25.95:8080/jenkins/
@@ -17,3 +18,16 @@ GRAY_JENKINS_PASSWORD =
 PROD_JENKINS_URI =
 PROD_JENKINS_USERNAME =
 PROD_JENKINS_PASSWORD =
+
+[sync configure]
+TEST_SYNC_ADDR = 192.168.25.130
+TEST_SYNC_USERNAME = work
+
+PRELEASE_SYNC_ADDR =
+PRELEASE_SYNC_USERNAME =
+
+GRAY_SYNC_ADDR =
+GRAY_SYNC_USERNAME =
+
+PROD_SYNC_ADDR =
+PROD_SYNC_USERNAME =

@@ -49,29 +49,12 @@ class Project(Model):
     the project line data model
     """
     language_choices = (
-        ("c/c++", "c/c++"),
-        ("c#", "c#"),
-        ("go", "go"),
-        ("html5", "html5"),
         ("java", "java"),
-        ("javascript", "javascript"),
-        ("php", "php"),
-        ("python/python3", "python/python3"),
-        ("ruby", "ruby"),
-        ("shell", "shell"),
-        ("others", "others")
+        ("javascript", "javascript")
     )
     arch_choices = (
-        ("django", "django"),
         ("dubbo", "dubbo"),
-        ("flask", "flask"),
-        ("reactjs", "reactjs"),
-        ("nodejs", "nodejs"),
-        ("spring boot", "spring boot"),
-        ("spring cloud", "spring cloud"),
-        ("scala", "scala"),
-        ("scrapy", "scrapy"),
-        ("vuejs", "vuejs")
+        ("nodejs", "nodejs")
     )
     genre_choices = (
         ("frontend", "frontend program"),

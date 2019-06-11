@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
     <actions/>
-    <!-- POINT_1: the project job description -->
+    <!-- POINT 1: the project job description -->
     <description>POINT_1</description>
     <keepDependencies>false</keepDependencies>
     <properties>
@@ -13,10 +13,10 @@
         <configVersion>2</configVersion>
         <userRemoteConfigs>
             <hudson.plugins.git.UserRemoteConfig>
-                <!-- POINT_2: the project's gitlab url -->
+                <!-- POINT 2: the project's gitlab url -->
                 <url>POINT_2</url>
-                <!-- POINT_3: the project's secret gitlab deploy key -->
-                <credentialsId>POINT_3</credentialsId>
+                <!-- ATTENTION PLEASE: the project's secret gitlab deploy key need to be update by yourself -->
+                <credentialsId>0ba993d3-6de5-40ce-98c3-73e20a246407</credentialsId>
             </hudson.plugins.git.UserRemoteConfig>
         </userRemoteConfigs>
         <branches>
@@ -36,7 +36,7 @@
     <concurrentBuild>false</concurrentBuild>
     <builders>
         <hudson.tasks.Maven>
-            <targets>clean install -U -DskipTests</targets>
+            <targets>clean install -U -DskipTests -Pproduct</targets>
             <mavenName>maven3.3.9</mavenName>
             <usePrivateRepository>false</usePrivateRepository>
             <settings class="jenkins.mvn.DefaultSettingsProvider"/>
@@ -50,18 +50,17 @@
             <delegate>
                 <publishers>
                     <jenkins.plugins.publish__over__ssh.BapSshPublisher>
-                        <!-- POINT_4: choice your target host -->
-                        <configName>POINT_4</configName>
+                        <configName>sync</configName>
                         <verbose>false</verbose>
                         <transfers>
                             <jenkins.plugins.publish__over__ssh.BapSshTransfer>
-                                <!-- 模板改动点(5): 归档主机 POINT_4 上的文件归档目录, 即将构建好的 java 包归档到哪个目录下 -->
-                                <remoteDirectory>POINT_5</remoteDirectory>
-                                <!-- 模板改动点(6): 指定 jenkins 主机上需要归档的源文件 -->
-                                <sourceFiles>POINT_6</sourceFiles>
+                                <!-- POINT 3: 归档主机 POINT_3 上的文件归档目录, 即将构建好的 java 包归档到哪个目录下 -->
+                                <remoteDirectory>POINT_3</remoteDirectory>
+                                <!-- POINT 4: 指定 jenkins 主机上需要归档的源文件 -->
+                                <sourceFiles>POINT_4</sourceFiles>
                                 <excludes></excludes>
-                                <!-- 模板改动点(7): 在归档过程中移除多余路径 -->
-                                <removePrefix>POINT_7</removePrefix>
+                                <!-- POINT 5: 在归档过程中移除多余路径 -->
+                                <removePrefix>POINT_5</removePrefix>
                                 <remoteDirectorySDF>false</remoteDirectorySDF>
                                 <flatten>false</flatten>
                                 <cleanRemote>false</cleanRemote>
