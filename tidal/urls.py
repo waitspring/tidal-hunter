@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
-urls.py is the root url configure file with tidal hunter project, this file will receive all requests and distribute
-them into our applications
+tidal.urls.py is the root url configure file with tidal hunter project, this file will receive all requests and
+distribute them into our applications
 """
-
 
 from django.conf.urls import include, url
 from board.views import board

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
-tidal.utils.py file will support some little tools for us
+tidal.utils.py will support some little tools for us, like:
+
+    * info( ) / warn( ) / eror( ) and other logging functions
 """
 
 import time

@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
-
 import re
 from django.forms import *
 from django.contrib import auth
 from .models import Employee, Department
-from engineering.models import Production, Project
+from engineering.models import Production
 
 
 # =====================================================================================================================

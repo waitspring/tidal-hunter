@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
 """
-settings.py is the root configure file with tidal hunter engineering, and you can find some standards for this file's
-coding in:
+tidal.settings.py is the root configure file with tidal hunter engineering, and you can find some standards for this
+file's coding in:
 
     * https://docs.djangoproject.com/en/1.8/topics/settings/
     * https://docs.djangoproject.com/en/1.8/ref/settings/
 """
-
 
 import os
 

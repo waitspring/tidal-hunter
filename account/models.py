@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.utils.translation import ugettext_lazy as lazy
 from django.utils import timezone

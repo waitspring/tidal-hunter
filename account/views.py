@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 from django.shortcuts import render, reverse
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
