@@ -19,6 +19,8 @@
     <tbody>
         <tr><td width=200 align=center>jira</td>
             <td width=698>项目管理工具，用于事务跟踪，任务追述和流程审批等工作</td></tr>
+        <tr><td align=center>ldap</td>
+            <td>作用域内的用户统一登录认证管理工具</td></tr>
         <tr><td align=center>gitlab</td>
             <td>源代码托管工具</td></tr>
         <tr><td align=center>jenkins</td>
@@ -40,15 +42,13 @@
     </tbody>
 </table>
 
-### 架构设计
+### 示例架构
 为布局潮汐猎人项目，我们建议将企业的环境架构进行如下设计  
 
 <table>
     <tbody>
-        <tr><td width=200 align=center>service</td>
-            <td width=698>服务环境</td></tr>
-        <tr><td align=center>test</td>
-            <td>测试环境</td></tr>
+        <tr><td width=200 align=center>test</td>
+            <td width=698>测试环境</td></tr>
         <tr><td align=center>prelease</td>
             <td>预发布环境</td></tr>
         <tr><td align=center>gray</td>
@@ -58,14 +58,28 @@
     </tbody>
 </table>
 
-其中，test | prelease | gray 在内的每个环境都应配置有独立的，服务于业务的中间件工具，这些工具包括  
+其中，测试环境、预发布环境应当分别配置独立的，服务于线下业务测试的中间件工具，包括  
 
 + `dns`
 + `nginx`
 + `jenkins`
 + `sync`
 
-此外，在服务环境内，还应配置有公用的中间件工具，例如  
+而在灰度环境、生产环境中，同样需要配置如下服务于正式业务的中间件工具  
 
-+ `configure center`
-+ `gitlab`
++ `dns（直接使用阿里云、DNSPod 在内的第三方服务）`
++ `nginx`
++ `jenkins`
++ `sync`
+
+此外，在独立于任意环境的中间件服务网段中，我们还需要配置多个环境共用的中间件工具，例如  
+
++ `ldap（部署在线下环境的中间件服务网段，仅针对测试环境、预发布环境有效）`
++ `configure center（部署在线下环境的中间件服务网段，通过映射防火墙的指定端口接受灰度环境、生产环境发出的请求）`
++ `gitlab（部署在线下环境的中间件服务网段，通过映射防火墙的指定端口接受灰度环境、生产环境发出的请求）`
++ `zabbix（部署在线上环境的中间件服务网段，仅针对灰度环境、生产环境有效）`
++ `elk（部署在线上环境的中间件服务网段，仅针对灰度环境、生产环境有效）`
++ `pinpoint（部署在线上环境的中间件服务网段，仅针对灰度环境、生产环境有效）`
+
+当然，作为一个运维开发人员，我们通常也面临着生产环境先于 devops 平台而存在的局面  
+所以我们以上的示例架构仅仅只是建议，是我们直接克隆下潮汐猎人源代码仓库之后，迅速启动潮汐猎人的凭据  
