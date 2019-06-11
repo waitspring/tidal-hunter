@@ -1,11 +1,4 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
-"""
-board.views
-
-this page includes tidal hunter's dash board views that as our website index path
-"""
 
 
 from django.shortcuts import render

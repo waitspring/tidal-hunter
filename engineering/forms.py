@@ -1,10 +1,4 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
-"""
-engineering.forms
-"""
-
 
 from django.forms import *
 from .models import Production, Project

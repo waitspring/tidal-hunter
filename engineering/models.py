@@ -1,12 +1,4 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
-"""
-engineering.models
-
-define all engineering models in this file
-"""
-
 
 from django.utils.translation import ugettext_lazy as lazy
 from django.utils import timezone

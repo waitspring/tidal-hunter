@@ -1,11 +1,4 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
-"""
-account.models
-
-we will define some models for tidal hunter in this models.py
-"""
 
 
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser

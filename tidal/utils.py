@@ -1,12 +1,8 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 """
-tidal.utils.py
-
-this file will support some little tools for us
+tidal.utils.py file will support some little tools for us
 """
-
 
 import time
 

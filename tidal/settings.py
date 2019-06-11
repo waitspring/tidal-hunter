@@ -1,9 +1,6 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 """
-tidal.settings
-
 settings.py is the root configure file with tidal hunter engineering, and you can find some standards for this file's
 coding in:
 

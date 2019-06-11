@@ -1,9 +1,6 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 """
-deploy_utils.py
-
 we use the python-jenkins package as our utils file, this file would support some functions for our deploy.views file
 
 please attention that: the python-jenkins package can be used in the python language but not python3, we need to change

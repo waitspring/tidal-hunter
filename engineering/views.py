@@ -1,10 +1,4 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
-"""
-engineering.views
-"""
-
 
 from django.shortcuts import render, reverse
 from django.contrib.auth.decorators import login_required

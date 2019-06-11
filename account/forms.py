@@ -1,9 +1,4 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
-"""
-account.forms
-"""
 
 
 import re
