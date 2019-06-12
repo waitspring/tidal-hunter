@@ -4,8 +4,8 @@
 # this script is a standard file for jenkins execute action, if your jenkins host has installed the jenkins like:
 #     * /opt/jenkins
 # you could mv this file into /opt/jenkins/cicd/ and rewrite the template_nodejs.xml file
-# this script would be executed by 4 parameters:
-# 1..  the nodejs project name
+# this script would be executed by 1 parameter:
+# 1..  the nodejs project name, and this parameter need to pass by the job's xml configure file
 
 
 # =====================================================================================================================
@@ -31,7 +31,7 @@ function eror()
 # build nodejs part
 # =====================================================================================================================
 # make sure the sync directory has been made
-ssh <USERNAME>@<SYNC_ADDR> "mkdir -p <SYNC_DIR>/${1} && rm -rf <SYNC_DIR>/${1}/*"
+ssh <USERNAME>@<SYNC_ADDR> "rm -rf <SYNC_DIR>/${1}/*"
 
 cd <JENKINS_DIR>/workspace/${1}
 sudo npm install -g @zbj/utopia-cli

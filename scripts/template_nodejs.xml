@@ -37,7 +37,7 @@
         <hudson.tasks.Shell>
             <!-- ATTENTION PLEASE: this shell script would be stored in the jenkins host, and the store path like as
                  this, and you can find this shell script in the same directory in our tidal-hunter -->
-            <command>/opt/jenkins/cicd/build_nodejs.sh</command>
+            <command>/opt/jenkins/cicd/build_nodejs.sh POINT_3</command>
         </hudson.tasks.Shell>
     </builders>
     <publishers/>

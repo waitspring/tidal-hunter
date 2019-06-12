@@ -98,22 +98,29 @@ class Job:
                 with open("scripts/config.xml", 'w') as output:
                     output.write(config)
                     info("write the config.xml successfully for " + self.name)
-                command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
-                    self._TEST_JENKINS_URI,
-                    self._TEST_JENKINS_USERNAME,
-                    self._TEST_JENKINS_PASSWORD,
-                    self.name,
-                    self._TEST_SYNC_USERNAME,
-                    self._TEST_SYNC_ADDR
-                )
             elif self.arch == "nodejs":
                 # =====================================================================================================
                 # create the nodejs job in the test environment
                 # =====================================================================================================
-                pass
+                with open("scripts/template_nodejs.xml", 'r') as config:
+                    config = config.read()
+                    config = config.replace("POINT_1", self.description)
+                    config = config.replace("POINT_2", self.git_source)
+                    config = config.replace("POINT_3", self.name)
+                with open("scripts/config.xml", 'w') as output:
+                    output.write(config)
+                    info("write the config.xml successfully for " + self.name)
             else:
                 warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
                 return None
+            command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
+                self._TEST_JENKINS_URI,
+                self._TEST_JENKINS_USERNAME,
+                self._TEST_JENKINS_PASSWORD,
+                self.name,
+                self._TEST_SYNC_USERNAME,
+                self._TEST_SYNC_ADDR
+            )
         elif env == "prelease":
             if self.arch == "dubbo":
                 # =====================================================================================================
@@ -129,22 +136,29 @@ class Job:
                 with open("scripts/config.xml", 'w') as output:
                     output.write(config)
                     info("write the config.xml successfully for " + self.name)
-                command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
-                    self._PRELEASE_JENKINS_URI,
-                    self._PRELEASE_JENKINS_USERNAME,
-                    self._PRELEASE_JENKINS_PASSWORD,
-                    self.name,
-                    self._PRELEASE_SYNC_USERNAME,
-                    self._PRELEASE_SYNC_ADDR
-                )
             elif self.arch == "nodejs":
                 # =====================================================================================================
                 # create the nodejs job in the pre-release environment
                 # =====================================================================================================
-                pass
+                with open("scripts/template_nodejs.xml", 'r') as config:
+                    config = config.read()
+                    config = config.replace("POINT_1", self.description)
+                    config = config.replace("POINT_2", self.git_source)
+                    config = config.replace("POINT_3", self.name)
+                with open("scripts/config.xml", 'w') as output:
+                    output.write(config)
+                    info("write the config.xml successfully for " + self.name)
             else:
                 warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
                 return None
+            command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
+                self._PRELEASE_JENKINS_URI,
+                self._PROD_JENKINS_USERNAME,
+                self._PROD_JENKINS_PASSWORD,
+                self.name,
+                self._PRELEASE_SYNC_USERNAME,
+                self._PRELEASE_SYNC_ADDR
+            )
         elif env == "gray":
             if self.arch == "dubbo":
                 # =====================================================================================================
@@ -160,22 +174,29 @@ class Job:
                 with open("scripts/config.xml", 'w') as output:
                     output.write(config)
                     info("write the config.xml successfully for " + self.name)
-                command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
-                    self._GRAY_JENKINS_URI,
-                    self._GRAY_JENKINS_USERNAME,
-                    self._GRAY_JENKINS_PASSWORD,
-                    self.name,
-                    self._GRAY_SYNC_USERNAME,
-                    self._GRAY_SYNC_ADDR
-                )
             elif self.arch == "nodejs":
                 # =====================================================================================================
                 # create the nodejs job in the gray environment
                 # =====================================================================================================
-                pass
+                with open("scripts/template_nodejs.xml", 'r') as config:
+                    config = config.read()
+                    config = config.replace("POINT_1", self.description)
+                    config = config.replace("POINT_2", self.git_source)
+                    config = config.replace("POINT_3", self.name)
+                with open("scripts/config.xml", 'w') as output:
+                    output.write(config)
+                    info("write the config.xml successfully for " + self.name)
             else:
                 warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
                 return None
+            command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
+                self._GRAY_JENKINS_URI,
+                self._GRAY_JENKINS_USERNAME,
+                self._GRAY_JENKINS_PASSWORD,
+                self.name,
+                self._GRAY_SYNC_USERNAME,
+                self._GRAY_SYNC_ADDR
+            )
         elif env == "prod":
             if self.arch == "dubbo":
                 # =====================================================================================================
@@ -191,22 +212,29 @@ class Job:
                 with open("scripts/config.xml", 'w') as output:
                     output.write(config)
                     info("write the config.xml successfully for " + self.name)
-                command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
-                    self._PROD_JENKINS_URI,
-                    self._PROD_JENKINS_USERNAME,
-                    self._PROD_JENKINS_PASSWORD,
-                    self.name,
-                    self._PROD_SYNC_USERNAME,
-                    self._PROD_SYNC_ADDR
-                )
             elif self.arch == "nodejs":
                 # =====================================================================================================
                 # create the nodejs job in the prod environment
                 # =====================================================================================================
-                pass
+                with open("scripts/template_nodejs.xml", 'r') as config:
+                    config = config.read()
+                    config = config.replace("POINT_1", self.description)
+                    config = config.replace("POINT_2", self.git_source)
+                    config = config.replace("POINT_3", self.name)
+                with open("scripts/config.xml", 'w') as output:
+                    output.write(config)
+                    info("write the config.xml successfully for " + self.name)
             else:
                 warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
                 return None
+            command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
+                self._PROD_JENKINS_URI,
+                self._PROD_JENKINS_USERNAME,
+                self._PROD_JENKINS_PASSWORD,
+                self.name,
+                self._PROD_SYNC_USERNAME,
+                self._PROD_SYNC_ADDR
+            )
         else:
             eror("parameter passing error, location to engineering.deploy_utils.Job.create_job")
             return None
