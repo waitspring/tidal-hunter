@@ -71,31 +71,65 @@
                         </tr>
                         <tr>
                             <td style="line-height: 36px">工作构建</td>
-                            {% for job in jobs %}
-                            <td>
-                                <a href="">
-                                    {% if "red" in job.color %}
-                                    <img class="my-job-status" src="/static/tidal/projects/red.png">
-                                    {% elif "blue" in job.color %}
-                                    <img class="my-job-status" src="/static/tidal/projects/blue.png">
-                                    {% elif "notbuilt" in job.color %}
-                                    <img class="my-job-status" src="/static/tidal/projects/notbuilt.png">
-                                    {% else %}{% endif %}
-                                </a>
-                            </td>
-                            {% endfor %}
+                            <td><a href="">
+                                {% if "red" in testJob.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/red.png">
+                                {% elif "blue" in testJob.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/blue.png">
+                                {% elif "notbuilt" in testJob.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/notbuilt.png">
+                                {% else %}{% endif %}
+                            </a></td>
+                            <td><a href="">
+                                {% if "red" in preleaseJob.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/red.png">
+                                {% elif "blue" in preleaseJob.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/blue.png">
+                                {% elif "notbuilt" in preleaseJob.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/notbuilt.png">
+                                {% else %}{% endif %}
+                            </a></td>
+                            <td><a href="">
+                                {% if "red" in grayJob.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/red.png">
+                                {% elif "blue" in grayJob.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/blue.png">
+                                {% elif "notbuilt" in grayJob.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/notbuilt.png">
+                                {% else %}{% endif %}
+                            </a></td>
+                            <td><a href="">
+                                {% if "red" in prodJob.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/red.png">
+                                {% elif "blue" in prodJob.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/blue.png">
+                                {% elif "notbuilt" in prodJob.color %}
+                                <img class="my-job-status" src="/static/tidal/projects/notbuilt.png">
+                                {% else %}{% endif %}
+                            </a></td>
                         </tr>
                         <tr>
                             <td>构建次数</td>
-                            {% for job in jobs %}
-                            <td>
-                                {% if job.color %}
-                                <a href="">{{ job.lastBuild.number }}</a>
+                            <td>{% if testJob.color %}
+                                <a href="">{{ testJob.lastBuild.number }}</a>
                                 {% else %}
-                                <a href="">新建工作</a>
-                                {% endif %}
-                            </td>
-                            {% endfor %}
+                                <a href="{% url 'deploy' %}?build={{ project.id }}&env=test">新建工作</a>
+                                {% endif %}</td>
+                            <td>{% if preleaseJob.color %}
+                                <a href="">{{ preleaseJob.lastBuild.number }}</a>
+                                {% else %}
+                                <a href="{% url 'deploy' %}?build={{ project.id }}&env=prelease">新建工作</a>
+                                {% endif %}</td>
+                            <td>{% if grayJob.color %}
+                                <a href="">{{ grayJob.lastBuild.number }}</a>
+                                {% else %}
+                                <a href="{% url 'deploy' %}?build={{ project.id }}&env=gray">新建工作</a>
+                                {% endif %}</td>
+                            <td>{% if prodJob.color %}
+                                <a href="">{{ prodJob.lastBuild.number }}</a>
+                                {% else %}
+                                <a href="{% url 'deploy' %}?build={{ project.id }}&env=prod">新建工作</a>
+                                {% endif %}</td>
                         </tr>
                     </tbody>
                 </table>

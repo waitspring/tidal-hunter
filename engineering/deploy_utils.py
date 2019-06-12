@@ -75,12 +75,12 @@ class Job:
             eror("parameter passing error, location to engineering.deploy_utils.Job.get_info")
             return None
         try:
-            info = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()
-            info = json.loads(info)
+            data = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()
+            data = json.loads(data)
         except:
             warn("send the request into " + env + " jenkins host failure")
-            info = None
-        return info
+            data = None
+        return data
 
     def create_job(self, env):
         if env == "test":
@@ -97,6 +97,7 @@ class Job:
                     config = config.replace("POINT_5", "target")
                 with open("scripts/config.xml", 'w') as output:
                     output.write(config)
+                    info("write the config.xml successfully for " + self.name)
                 command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
                     self._TEST_JENKINS_URI,
                     self._TEST_JENKINS_USERNAME,
@@ -127,6 +128,7 @@ class Job:
                     config = config.replace("POINT_5", "target")
                 with open("scripts/config.xml", 'w') as output:
                     output.write(config)
+                    info("write the config.xml successfully for " + self.name)
                 command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
                     self._PRELEASE_JENKINS_URI,
                     self._PRELEASE_JENKINS_USERNAME,
@@ -157,6 +159,7 @@ class Job:
                     config = config.replace("POINT_5", "target")
                 with open("scripts/config.xml", 'w') as output:
                     output.write(config)
+                    info("write the config.xml successfully for " + self.name)
                 command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
                     self._GRAY_JENKINS_URI,
                     self._GRAY_JENKINS_USERNAME,
@@ -187,6 +190,7 @@ class Job:
                     config = config.replace("POINT_5", "target")
                 with open("scripts/config.xml", 'w') as output:
                     output.write(config)
+                    info("write the config.xml successfully for " + self.name)
                 command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
                     self._PROD_JENKINS_URI,
                     self._PROD_JENKINS_USERNAME,
@@ -206,9 +210,4 @@ class Job:
         else:
             eror("parameter passing error, location to engineering.deploy_utils.Job.create_job")
             return None
-        try:
-            info = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()
-            print(info)                                              # showing as a logging tee
-        except:
-            info = None
-        return info
+        return subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()

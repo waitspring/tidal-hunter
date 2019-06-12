@@ -50,6 +50,8 @@
             <delegate>
                 <publishers>
                     <jenkins.plugins.publish__over__ssh.BapSshPublisher>
+                        <!-- this configName value is a choice value, we need to config host in the jenkins global
+                             config function -->
                         <configName>sync</configName>
                         <verbose>false</verbose>
                         <transfers>

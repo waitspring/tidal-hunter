@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render, reverse
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from .forms import ProductionForm, ProjectForm
@@ -220,14 +221,18 @@ def deploy(request):
             context = {
                 "projects": projects,
                 "project": project,
-                "jobs": [
-                    job.get_info("test") if job.get_info("test") else None,
-                    job.get_info("prelease") if job.get_info("prelease") else None,
-                    job.get_info("gray") if job.get_info("gray") else None,
-                    job.get_info("prod") if job.get_info("prod") else None
-                ]
+                "testJob": job.get_info("test") if job.get_info("test") else None,
+                "preleaseJob": job.get_info("prelease") if job.get_info("prelease") else None,
+                "grayJob": job.get_info("gray") if job.get_info("gray") else None,
+                "prodJob": job.get_info("prod") if job.get_info("prod") else None
             }
             return render(request, "engineering/deploy.html", context)
+        elif request.GET.get("build") != None:
+            project = Project.objects.get(id=request.GET.get("build"))
+            if Job(project).create_job(request.GET.get("env")):
+                return HttpResponseRedirect(reverse("deploy") + "?name=" + str(project.id))
+            else:
+                return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views.deploy")
         else:
             context = {
                 "projects": Project.objects.all()
@@ -236,4 +241,4 @@ def deploy(request):
     elif request.method == "POST":
         pass
     else:
-        return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views")
+        return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views.deploy")

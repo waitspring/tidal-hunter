@@ -1,7 +1,6 @@
 #!/bin/bash
 # -*- coding: utf-8 -*-
 
-
 # this script would be executed by 4 parameters:
 # 1..  the jenkins host's uri which include the port num and the request path(jenkins index web page path)
 # 2..  the jenkins host's username
@@ -37,7 +36,7 @@ function eror()
 if [ ${#} -ne 6 ]; then
     eror "parameters number error, please check the calling command"
     warn "script exit with status 1"
-    exit 1
+    rm -f scripts/config.xml && exit 1
 fi
 
 # make the sync directory to store the build result
@@ -45,7 +44,7 @@ ssh -A ${5}@${6} "mkdir -p /data/code_deploy/${4}"
 if [ ${?} -ne 0 ]; then
     eror "can not make the remote sync directory in ${6} by user ${5}"
     warn "script exit with status 2"
-    exit 2
+    rm -f scripts/config.xml && exit 2
 else
     info "make the remote sync directory successfully in ${6} by user ${5}"
 fi
@@ -56,10 +55,7 @@ cd scripts && curl -X POST -d @config.xml -H "Content-Type:text/xml" "${URI}" --
 if [ ${?} -ne 0 ]; then
     eror "can not create the job"
     warn "script exit with status 2"
-    exit 2
+    rm -f config.xml && exit 2
 else
-    info "create the job successfully"
+    rm -f config.xml && info "create the job successfully"
 fi
-
-# delete the config.xml
-rm -f config.xml
