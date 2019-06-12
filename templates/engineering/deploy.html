@@ -89,7 +89,7 @@
                             <td>构建次数</td>
                             {% for job in jobs %}
                             <td>
-                                {% if job.lastBuild.number %}
+                                {% if job.color %}
                                 <a href="">{{ job.lastBuild.number }}</a>
                                 {% else %}
                                 <a href="">新建工作</a>

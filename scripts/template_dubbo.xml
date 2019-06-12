@@ -54,6 +54,7 @@
                         <verbose>false</verbose>
                         <transfers>
                             <jenkins.plugins.publish__over__ssh.BapSshTransfer>
+                                <!-- 注意, 以下内容的显示顺序和 jenkins 网页上的显示顺序并不一致-->
                                 <!-- POINT 3: 归档主机 POINT_3 上的文件归档目录, 即将构建好的 java 包归档到哪个目录下 -->
                                 <remoteDirectory>POINT_3</remoteDirectory>
                                 <!-- POINT 4: 指定 jenkins 主机上需要归档的源文件 -->

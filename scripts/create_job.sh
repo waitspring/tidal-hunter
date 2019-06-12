@@ -53,6 +53,13 @@ fi
 # call jenkins rest api to build the job
 URI="${1}/createItem?name=${4}"
 cd scripts && curl -X POST -d @config.xml -H "Content-Type:text/xml" "${URI}" --user ${2}:${3}
+if [ ${?} -ne 0 ]; then
+    eror "can not create the job"
+    warn "script exit with status 2"
+    exit 2
+else
+    info "create the job successfully"
+fi
 
 # delete the config.xml
 rm -f config.xml

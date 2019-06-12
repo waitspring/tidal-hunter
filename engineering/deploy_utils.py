@@ -85,6 +85,9 @@ class Job:
     def create_job(self, env):
         if env == "test":
             if self.arch == "dubbo":
+                # =====================================================================================================
+                # create the dubbo job in the test environment
+                # =====================================================================================================
                 with open("scripts/template_dubbo.xml", 'r') as config:
                     config = config.read()
                     config = config.replace("POINT_1", self.description)
@@ -103,30 +106,99 @@ class Job:
                     self._TEST_SYNC_ADDR
                 )
             elif self.arch == "nodejs":
+                # =====================================================================================================
+                # create the nodejs job in the test environment
+                # =====================================================================================================
                 pass
             else:
                 warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
                 return None
         elif env == "prelease":
             if self.arch == "dubbo":
-                pass
+                # =====================================================================================================
+                # create the dubbo job in the pre-release environment
+                # =====================================================================================================
+                with open("scripts/template_dubbo.xml", 'r') as config:
+                    config = config.read()
+                    config = config.replace("POINT_1", self.description)
+                    config = config.replace("POINT_2", self.git_source)
+                    config = config.replace("POINT_3", "./" + self.name)
+                    config = config.replace("POINT_4", "target/*.war")
+                    config = config.replace("POINT_5", "target")
+                with open("scripts/config.xml", 'w') as output:
+                    output.write(config)
+                command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
+                    self._PRELEASE_JENKINS_URI,
+                    self._PRELEASE_JENKINS_USERNAME,
+                    self._PRELEASE_JENKINS_PASSWORD,
+                    self.name,
+                    self._PRELEASE_SYNC_USERNAME,
+                    self._PRELEASE_SYNC_ADDR
+                )
             elif self.arch == "nodejs":
+                # =====================================================================================================
+                # create the nodejs job in the pre-release environment
+                # =====================================================================================================
                 pass
             else:
                 warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
                 return None
         elif env == "gray":
             if self.arch == "dubbo":
-                pass
+                # =====================================================================================================
+                # create the dubbo job in the gray environment
+                # =====================================================================================================
+                with open("scripts/template_dubbo.xml", 'r') as config:
+                    config = config.read()
+                    config = config.replace("POINT_1", self.description)
+                    config = config.replace("POINT_2", self.git_source)
+                    config = config.replace("POINT_3", "./" + self.name)
+                    config = config.replace("POINT_4", "target/*.war")
+                    config = config.replace("POINT_5", "target")
+                with open("scripts/config.xml", 'w') as output:
+                    output.write(config)
+                command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
+                    self._GRAY_JENKINS_URI,
+                    self._GRAY_JENKINS_USERNAME,
+                    self._GRAY_JENKINS_PASSWORD,
+                    self.name,
+                    self._GRAY_SYNC_USERNAME,
+                    self._GRAY_SYNC_ADDR
+                )
             elif self.arch == "nodejs":
+                # =====================================================================================================
+                # create the nodejs job in the gray environment
+                # =====================================================================================================
                 pass
             else:
                 warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
                 return None
         elif env == "prod":
             if self.arch == "dubbo":
-                pass
+                # =====================================================================================================
+                # create the dubbo job in the prod environment
+                # =====================================================================================================
+                with open("scripts/template_dubbo.xml", 'r') as config:
+                    config = config.read()
+                    config = config.replace("POINT_1", self.description)
+                    config = config.replace("POINT_2", self.git_source)
+                    config = config.replace("POINT_3", "./" + self.name)
+                    config = config.replace("POINT_4", "target/*.war")
+                    config = config.replace("POINT_5", "target")
+                with open("scripts/config.xml", 'w') as output:
+                    output.write(config)
+                command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
+                    self._PROD_JENKINS_URI,
+                    self._PROD_JENKINS_USERNAME,
+                    self._PROD_JENKINS_PASSWORD,
+                    self.name,
+                    self._PROD_SYNC_USERNAME,
+                    self._PROD_SYNC_ADDR
+                )
             elif self.arch == "nodejs":
+                # =====================================================================================================
+                # create the nodejs job in the prod environment
+                # =====================================================================================================
                 pass
             else:
                 warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
