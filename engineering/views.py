@@ -213,32 +213,33 @@ def project(request):
 # =====================================================================================================================
 @login_required()
 def deploy(request):
-    if request.method == "GET":
-        if request.GET.get("name") != None:
-            projects = Project.objects.all()
-            project = Project.objects.get(id=request.GET.get("name"))
-            job = Job(project)
-            context = {
-                "projects": projects,
-                "project": project,
-                "testJob": job.get_info("test") if job.get_info("test") else None,
-                "preleaseJob": job.get_info("prelease") if job.get_info("prelease") else None,
-                "grayJob": job.get_info("gray") if job.get_info("gray") else None,
-                "prodJob": job.get_info("prod") if job.get_info("prod") else None
-            }
-            return render(request, "engineering/deploy.html", context)
-        elif request.GET.get("build") != None:
-            project = Project.objects.get(id=request.GET.get("build"))
-            if Job(project).create_job(request.GET.get("env")):
-                return HttpResponseRedirect(reverse("deploy") + "?name=" + str(project.id))
-            else:
-                return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views.deploy")
+    if request.GET.get("name"):
+        projects = Project.objects.all()
+        project = Project.objects.get(id=request.GET.get("name"))
+        job = Job(project)
+        context = {
+            "projects": projects,
+            "project": project,
+            "testJob": job.get_info("test") if job.get_info("test") else None,
+            "preleaseJob": job.get_info("prelease") if job.get_info("prelease") else None,
+            "grayJob": job.get_info("gray") if job.get_info("gray") else None,
+            "prodJob": job.get_info("prod") if job.get_info("prod") else None
+        }
+        return render(request, "engineering/deploy.html", context)
+    elif request.GET.get("create"):
+        project = Project.objects.get(id=request.GET.get("create"))
+        if Job(project).create_job(request.GET.get("env")):
+            return HttpResponseRedirect(reverse("deploy") + "?name=" + str(project.id))
         else:
-            context = {
-                "projects": Project.objects.all()
-            }
-            return render(request, "engineering/deploy.html", context)
-    elif request.method == "POST":
-        pass
+            return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views.deploy")
+    elif request.GET.get("build"):
+        project = Project.objects.get(id=request.GET.get("build"))
+        if Job(project).build_job(request.GET.get("env")):
+            return HttpResponseRedirect(reverse("deploy") + "?name=" + str(project.id))
+        else:
+            return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views.deploy")
     else:
-        return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views.deploy")
+        context = {
+            "projects": Project.objects.all()
+        }
+        return render(request, "engineering/deploy.html", context)

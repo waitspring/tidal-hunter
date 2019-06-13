@@ -31,7 +31,7 @@ function eror()
 # build nodejs part
 # =====================================================================================================================
 # make sure the sync directory has been made
-ssh <USERNAME>@<SYNC_ADDR> "rm -rf <SYNC_DIR>/${1}/*"
+ssh -A <USERNAME>@<SYNC_ADDR> "rm -rf <SYNC_DIR>/${1}/*"
 
 cd <JENKINS_DIR>/workspace/${1}
 sudo npm install -g @zbj/utopia-cli
