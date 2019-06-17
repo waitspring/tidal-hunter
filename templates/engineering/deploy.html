@@ -117,17 +117,20 @@
                                 <a href="{% url 'deploy' %}?create={{ project.id }}&env=test">新建工作</a>
                                 {% endif %}</td>
                             <td>{% if preleaseJob.color %}
-                                <a href="">{{ preleaseJob.lastBuild.number }}</a>
+                                <a href="{% url 'deploy' %}?create={{ project.id }}&env=prelease&num={{ preleaseJob.lastBuild.number }}">
+                                    {{ preleaseJob.lastBuild.number }}</a>
                                 {% else %}
                                 <a href="{% url 'deploy' %}?create={{ project.id }}&env=prelease">新建工作</a>
                                 {% endif %}</td>
                             <td>{% if grayJob.color %}
-                                <a href="">{{ grayJob.lastBuild.number }}</a>
+                                <a href="{% url 'deploy' %}?create={{ project.id }}&env=gray&num={{ grayJob.lastBuild.number }}">
+                                    {{ grayJob.lastBuild.number }}</a>
                                 {% else %}
                                 <a href="{% url 'deploy' %}?create={{ project.id }}&env=gray">新建工作</a>
                                 {% endif %}</td>
                             <td>{% if prodJob.color %}
-                                <a href="">{{ prodJob.lastBuild.number }}</a>
+                                <a href="{% url 'deploy' %}?create={{ project.id }}&env=prod&num={{ prodJob.lastBuild.number }}">
+                                    {{ prodJob.lastBuild.number }}</a>
                                 {% else %}
                                 <a href="{% url 'deploy' %}?create={{ project.id }}&env=prod">新建工作</a>
                                 {% endif %}</td>

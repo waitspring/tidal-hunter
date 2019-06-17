@@ -240,12 +240,23 @@ def deploy(request):
             return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views.deploy")
     elif request.GET.get("console"):
         project = Project.objects.get(id=request.GET.get("console"))
-        output = Job(project).get_output(env=request.GET.get("env"), num=request.GET.get("num"))
-        context = {
-            "project": project,
-            "output": output
-        }
-        return render(request, "engineering/output.html", context)
+        job = Job(project)
+        num = int(request.GET.get("num"))
+        max_num = int(job.get_info(request.GET.get("env"))["lastBuild"]["number"])
+        check = (lambda x, y: True if x <= y else False)
+        if check(num, max_num):
+            output = Job(project).get_output(env=request.GET.get("env"), num=request.GET.get("num"))
+            context = {
+                "project": project,
+                "output": output
+            }
+            return render(request, "engineering/output.html", context)
+        else:
+            context = {
+                "project": project,
+                "output": None
+            }
+            return render(request, "engineering/output.html", context)
     else:
         context = {
             "projects": Project.objects.all()
