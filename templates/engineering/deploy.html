@@ -111,7 +111,8 @@
                         <tr>
                             <td>构建次数</td>
                             <td>{% if testJob.color %}
-                                <a href="">{{ testJob.lastBuild.number }}</a>
+                                <a href="{% url 'deploy' %}?console={{ project.id }}&env=test&num={{ testJob.lastBuild.number }}">
+                                    {{ testJob.lastBuild.number }}</a>
                                 {% else %}
                                 <a href="{% url 'deploy' %}?create={{ project.id }}&env=test">新建工作</a>
                                 {% endif %}</td>

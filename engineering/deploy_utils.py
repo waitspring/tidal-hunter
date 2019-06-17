@@ -261,3 +261,44 @@ class Job:
             warn("project architecture error, location to engineering.deploy_utils.Job.build_job")
             return None
         return subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()
+
+    def get_output(self, env, num):
+        """
+        this method could get the build console output data for us, by our times parameter
+        """
+        if env == "test":
+            command = "bash scripts/get_output.sh %s %s %s %s %s" % (
+                self._TEST_JENKINS_URI,
+                self._TEST_JENKINS_USERNAME,
+                self._TEST_JENKINS_PASSWORD,
+                self.name,
+                num
+            )
+        elif env == "prelease":
+            command = "bash scripts/get_output.sh %s %s %s %s %s" % (
+                self._PRELEASE_JENKINS_URI,
+                self._PRELEASE_JENKINS_USERNAME,
+                self._PRELEASE_JENKINS_PASSWORD,
+                self.name,
+                num
+            )
+        elif env == "gray":
+            command = "bash scripts/get_output.sh %s %s %s %s %s" % (
+                self._GRAY_JENKINS_URI,
+                self._GRAY_JENKINS_USERNAME,
+                self._GRAY_JENKINS_PASSWORD,
+                self.name,
+                num
+            )
+        elif env == "prod":
+            command = "bash scripts/get_output.sh %s %s %s %s %s" % (
+                self._PROD_JENKINS_URI,
+                self._PROD_JENKINS_USERNAME,
+                self._PROD_JENKINS_PASSWORD,
+                self.name,
+                num
+            )
+        else:
+            warn("project architecture error, location to engineering.deploy_utils.Job.get_output")
+            return None
+        return subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()

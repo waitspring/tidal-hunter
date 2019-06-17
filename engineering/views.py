@@ -238,6 +238,14 @@ def deploy(request):
             return HttpResponseRedirect(reverse("deploy") + "?name=" + str(project.id))
         else:
             return HttpResponseBadRequest(content="request 错误 *** 错误定位到 engineering.views.deploy")
+    elif request.GET.get("console"):
+        project = Project.objects.get(id=request.GET.get("console"))
+        output = Job(project).get_output(env=request.GET.get("env"), num=request.GET.get("num"))
+        context = {
+            "project": project,
+            "output": output
+        }
+        return render(request, "engineering/output.html", context)
     else:
         context = {
             "projects": Project.objects.all()
