@@ -71,7 +71,7 @@
                         </tr>
                         <tr>
                             <td style="line-height: 36px">工作构建</td>
-                            <td><a href="{% url 'deploy' %}?build={{ project.id }}&env=test" onclick="notice('已经开始工作构建, 请勿重复点击构建按钮, 等待两分钟后刷新本页面')">
+                            <td><a href="{% url 'deploy' %}?build={{ project.id }}&env=test" onclick="deploy_notice('已经开始工作构建, 请勿重复点击构建按钮, 等待两分钟后刷新本页面')">
                                 {% if "red" in testJob.color %}
                                 <img class="my-job-status" src="/static/tidal/projects/red.png">
                                 {% elif "blue" in testJob.color %}
@@ -80,7 +80,7 @@
                                 <img class="my-job-status" src="/static/tidal/projects/notbuilt.png">
                                 {% else %}{% endif %}
                             </a></td>
-                            <td><a href="{% url 'deploy' %}?build={{ project.id }}?env=prelease">
+                            <td><a href="{% url 'deploy' %}?build={{ project.id }}?env=prelease" onclick="deploy_notice('已经开始工作构建, 请勿重复点击构建按钮, 等待两分钟后刷新本页面')">
                                 {% if "red" in preleaseJob.color %}
                                 <img class="my-job-status" src="/static/tidal/projects/red.png">
                                 {% elif "blue" in preleaseJob.color %}
@@ -89,7 +89,7 @@
                                 <img class="my-job-status" src="/static/tidal/projects/notbuilt.png">
                                 {% else %}{% endif %}
                             </a></td>
-                            <td><a href="{% url 'deploy' %}?build={{ project.id }}?env=gray">
+                            <td><a href="{% url 'deploy' %}?build={{ project.id }}?env=gray" onclick="deploy_notice('已经开始工作构建, 请勿重复点击构建按钮, 等待两分钟后刷新本页面')">
                                 {% if "red" in grayJob.color %}
                                 <img class="my-job-status" src="/static/tidal/projects/red.png">
                                 {% elif "blue" in grayJob.color %}
@@ -98,7 +98,7 @@
                                 <img class="my-job-status" src="/static/tidal/projects/notbuilt.png">
                                 {% else %}{% endif %}
                             </a></td>
-                            <td><a href="{% url 'deploy' %}?build={{ project.id }}?env=prod">
+                            <td><a href="{% url 'deploy' %}?build={{ project.id }}?env=prod" onclick="deploy_notice('已经开始工作构建, 请勿重复点击构建按钮, 等待两分钟后刷新本页面')">
                                 {% if "red" in prodJob.color %}
                                 <img class="my-job-status" src="/static/tidal/projects/red.png">
                                 {% elif "blue" in prodJob.color %}
@@ -111,25 +111,25 @@
                         <tr>
                             <td>构建次数</td>
                             <td>{% if testJob.color %}
-                                <a href="{% url 'deploy' %}?console={{ project.id }}&env=test&num={{ testJob.lastBuild.number }}">
+                                <a onclick="deploy_output('{{ project.full_name }}', '{% url 'deploy' %}?console={{ project.id }}&env=test&num={{ testJob.lastBuild.number }}')">
                                     {{ testJob.lastBuild.number }}</a>
                                 {% else %}
                                 <a href="{% url 'deploy' %}?create={{ project.id }}&env=test">新建工作</a>
                                 {% endif %}</td>
                             <td>{% if preleaseJob.color %}
-                                <a href="{% url 'deploy' %}?create={{ project.id }}&env=prelease&num={{ preleaseJob.lastBuild.number }}">
+                                <a onclick="deploy_output('{{ project.full_name }}', '{% url 'deploy' %}?create={{ project.id }}&env=prelease&num={{ preleaseJob.lastBuild.number }}')">
                                     {{ preleaseJob.lastBuild.number }}</a>
                                 {% else %}
                                 <a href="{% url 'deploy' %}?create={{ project.id }}&env=prelease">新建工作</a>
                                 {% endif %}</td>
                             <td>{% if grayJob.color %}
-                                <a href="{% url 'deploy' %}?create={{ project.id }}&env=gray&num={{ grayJob.lastBuild.number }}">
+                                <a onclick="deploy_output('{{ project.full_name }}', '{% url 'deploy' %}?create={{ project.id }}&env=gray&num={{ grayJob.lastBuild.number }}')">
                                     {{ grayJob.lastBuild.number }}</a>
                                 {% else %}
                                 <a href="{% url 'deploy' %}?create={{ project.id }}&env=gray">新建工作</a>
                                 {% endif %}</td>
                             <td>{% if prodJob.color %}
-                                <a href="{% url 'deploy' %}?create={{ project.id }}&env=prod&num={{ prodJob.lastBuild.number }}">
+                                <a onclick="deploy_output('{{ project.full_name }}', '{% url 'deploy' %}?create={{ project.id }}&env=prod&num={{ prodJob.lastBuild.number }}')">
                                     {{ prodJob.lastBuild.number }}</a>
                                 {% else %}
                                 <a href="{% url 'deploy' %}?create={{ project.id }}&env=prod">新建工作</a>

@@ -250,13 +250,12 @@ def deploy(request):
                 "project": project,
                 "output": output
             }
-            return render(request, "engineering/output.html", context)
         else:
             context = {
                 "project": project,
                 "output": None
             }
-            return render(request, "engineering/output.html", context)
+        return render(request, "engineering/output.html", context)
     else:
         context = {
             "projects": Project.objects.all()
