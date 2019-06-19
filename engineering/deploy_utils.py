@@ -302,3 +302,25 @@ class Job:
             warn("project architecture error, location to engineering.deploy_utils.Job.get_output")
             return None
         return subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()
+
+    def delete_job(self, env):
+        if env == "test":
+            command = "bash scripts/delete_job.sh %s %s %s %s" % (
+                self._TEST_JENKINS_URI, self._TEST_JENKINS_USERNAME, self._TEST_JENKINS_PASSWORD, self.name
+            )
+        elif env == "prelease":
+            command = "bash scripts/delete_job.sh %s %s %s %s" % (
+                self._PRELEASE_JENKINS_URI, self._PRELEASE_JENKINS_USERNAME, self._PRELEASE_JENKINS_PASSWORD, self.name
+            )
+        elif env == "gray":
+            command = "bash scripts/delete_job.sh %s %s %s %s" % (
+                self._GRAY_JENKINS_URI, self._GRAY_JENKINS_USERNAME, self._GRAY_JENKINS_PASSWORD, self.name
+            )
+        elif env == "prod":
+            command = "bash scripts/delete_job.sh %s %s %s %s" % (
+                self._PROD_JENKINS_URI, self._PROD_JENKINS_USERNAME, self._PROD_JENKINS_PASSWORD, self.name
+            )
+        else:
+            warn("project architecture error, location to engineering.deploy_utils.Job.delete_job")
+            return None
+        return subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().decode()

@@ -140,6 +140,29 @@
             </div>
         </div>
     </div>
+    <!-- danger control ---------------------------------------------------------------------------------------------->
+    {% if user.is_superuser %}
+    <div class="col-md-7" style="margin: 0px; padding: 0px;">
+        <div class="panel panel-default my-panel">
+            <div class="panel-body my-panel-body">
+                <table class="table text-center">
+                    <tbody>
+                        <tr><td>工作环境</td><td>开发环境</td><td>预发布环境</td><td>灰度环境</td><td>生产环境</td></tr>
+                        <tr><td>危险操作</td>
+                            <td><a class="my-danger-del" href="{% url 'deploy' %}?delete={{ project.id }}&env=test" title="点击后将直接删除对应环境的 jenkins 工作, 请谨慎操作">
+                                <span>delete</span></a></td>
+                            <td><a class="my-danger-del" href="" title="点击后将直接删除对应环境的 jenkins 工作, 请谨慎操作">
+                                <span>delete</span></a></td>
+                            <td><a class="my-danger-del" href="" title="点击后将直接删除对应环境的 jenkins 工作, 请谨慎操作">
+                                <span>delete</span></a></td>
+                            <td><a class="my-danger-del" href="" title="点击后将直接删除对应环境的 jenkins 工作, 请谨慎操作">
+                                <span>delete</span></a></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     {% endif %}
 </section>
 {% endblock %}

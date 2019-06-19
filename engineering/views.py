@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from .forms import ProductionForm, ProjectForm
 from .models import Production, Project
 from .deploy_utils import Job
+from tidal.utils import *
 
 
 # =====================================================================================================================
@@ -246,16 +247,16 @@ def deploy(request):
         check = (lambda x, y: True if x <= y else False)
         if check(num, max_num):
             output = Job(project).get_output(env=request.GET.get("env"), num=request.GET.get("num"))
-            context = {
-                "project": project,
-                "output": output
-            }
         else:
-            context = {
-                "project": project,
-                "output": None
-            }
-        return render(request, "engineering/output.html", context)
+            output = None
+        return render(request, "engineering/output.html", { "output": output })
+    elif request.GET.get("delete"):
+        project = Project.objects.get(id=request.GET.get("delete"))
+        try:
+            Job(project).delete_job(request.GET.get("env"))
+        except:
+            eror("删除 jenkins 工作失败")
+        return HttpResponseRedirect(reverse("deploy") + "?name=" + str(project.id))
     else:
         context = {
             "projects": Project.objects.all()

@@ -143,3 +143,17 @@ a.my-update-link:hover {
 img.my-job-status {
     height: 36px;
 }
+
+a.my-danger-del {
+    font-size: 14px;
+    padding: 4px 8px;
+    border: 0px;
+    background-color: #FFF;
+    color: #E03636;
+    transition: background 200ms ease-out;
+}
+
+a.my-danger-del:hover {
+    background-color: #E03636;
+    color: #FFF;
+}

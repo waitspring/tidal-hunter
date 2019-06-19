@@ -13,17 +13,17 @@
 # =====================================================================================================================
 function info()
 {
-    echo -e "$(date +"%F %T") \E[32m[INFO] ${1} \E[0m"
+    echo "$(date +"%F %T") [INFO] ${1}"
 }
 
 function warn()
 {
-    echo -e "$(date +"%F %T") \E[33m[WARN] ${1} \E[0m"
+    echo "$(date +"%F %T") [WARN] ${1}"
 }
 
 function eror()
 {
-    echo -e "$(date +"%F %T") \E[31m[EROR] ${1} \E[0m"
+    echo "$(date +"%F %T") [EROR] ${1}"
 }
 
 
