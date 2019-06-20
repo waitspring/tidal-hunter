@@ -6,8 +6,8 @@
 # 2..  the jenkins host's username
 # 3..  the jenkins host's password
 # 4..  the new job name
-# 5..  the remote sync host ip address
-# 6..  the remote sync host user, this user need sudo auth without entering password
+# 5..  the remote sync host user, this user need sudo auth without entering password
+# 6..  the remote sync host ip address
 
 
 # =====================================================================================================================
@@ -36,7 +36,7 @@ function eror()
 if [ ${#} -ne 6 ]; then
     eror "parameters number error, please check the calling command"
     warn "script exit with status 1"
-    rm -f scripts/config.xml && exit 1
+    rm -f scripts/jenkins/config.xml && exit 1
 fi
 
 # make the sync directory to store the build result
@@ -44,14 +44,14 @@ ssh -A ${5}@${6} "mkdir -p /data/code_deploy/${4}"
 if [ ${?} -ne 0 ]; then
     eror "can not make the remote sync directory in ${6} by user ${5}"
     warn "script exit with status 2"
-    rm -f scripts/config.xml && exit 2
+    rm -f scripts/jenkins/config.xml && exit 2
 else
     info "make the remote sync directory successfully in ${6} by user ${5}"
 fi
 
 # call jenkins rest api to build the job
 URI="${1}/createItem?name=${4}"
-cd scripts && curl -X POST -d @config.xml -H "Content-Type:text/xml" "${URI}" --user ${2}:${3}
+cd scripts/jenkins && curl -X POST -d @config.xml -H "Content-Type:text/xml" "${URI}" --user ${2}:${3}
 if [ ${?} -ne 0 ]; then
     eror "can not create the job"
     warn "script exit with status 2"

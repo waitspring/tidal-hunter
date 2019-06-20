@@ -56,19 +56,19 @@ class Job:
 
     def get_info(self, env):
         if env == "test":
-            command = "bash scripts/get_job_info.sh %s %s %s %s" % (
+            command = "bash scripts/jenkins/get_job_info.sh %s %s %s %s" % (
                 self._TEST_JENKINS_URI, self._TEST_JENKINS_USERNAME, self._TEST_JENKINS_PASSWORD, self.name
             )
         elif env == "prelease":
-            command = "bash scripts/get_job_info.sh %s %s %s %s" % (
+            command = "bash scripts/jenkins/get_job_info.sh %s %s %s %s" % (
                 self._PRELEASE_JENKINS_URI, self._PRELEASE_JENKINS_USERNAME, self._PRELEASE_JENKINS_PASSWORD, self.name
             )
         elif env == "gray":
-            command = "bash scripts/get_job_info.sh %s %s %s %s" % (
+            command = "bash scripts/jenkins/get_job_info.sh %s %s %s %s" % (
                 self._GRAY_JENKINS_URI, self._GRAY_JENKINS_USERNAME, self._GRAY_JENKINS_PASSWORD, self.name
             )
         elif env == "prod":
-            command = "bash scripts/get_job_info.sh %s %s %s %s" % (
+            command = "bash scripts/jenkins/get_job_info.sh %s %s %s %s" % (
                 self._PROD_JENKINS_URI, self._PROD_JENKINS_USERNAME, self._PROD_JENKINS_PASSWORD, self.name
             )
         else:
@@ -88,32 +88,32 @@ class Job:
                 # =====================================================================================================
                 # create the dubbo job in the test environment
                 # =====================================================================================================
-                with open("scripts/template_dubbo.xml", 'r') as config:
+                with open("scripts/jenkins/template_dubbo.xml", 'r') as config:
                     config = config.read()
                     config = config.replace("POINT_1", self.description)
                     config = config.replace("POINT_2", self.git_source)
                     config = config.replace("POINT_3", "./" + self.name)
                     config = config.replace("POINT_4", "target/*.war")
                     config = config.replace("POINT_5", "target")
-                with open("scripts/config.xml", 'w') as output:
+                with open("scripts/jenkins/config.xml", 'w') as output:
                     output.write(config)
                     info("write the config.xml successfully for " + self.name)
             elif self.arch == "nodejs":
                 # =====================================================================================================
                 # create the nodejs job in the test environment
                 # =====================================================================================================
-                with open("scripts/template_nodejs.xml", 'r') as config:
+                with open("scripts/jenkins/template_nodejs.xml", 'r') as config:
                     config = config.read()
                     config = config.replace("POINT_1", self.description)
                     config = config.replace("POINT_2", self.git_source)
                     config = config.replace("POINT_3", self.name)
-                with open("scripts/config.xml", 'w') as output:
+                with open("scripts/jenkins/config.xml", 'w') as output:
                     output.write(config)
                     info("write the config.xml successfully for " + self.name)
             else:
                 warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
                 return None
-            command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
+            command = "bash scripts/jenkins/create_job.sh %s %s %s %s %s %s" % (
                 self._TEST_JENKINS_URI,
                 self._TEST_JENKINS_USERNAME,
                 self._TEST_JENKINS_PASSWORD,
@@ -126,32 +126,32 @@ class Job:
                 # =====================================================================================================
                 # create the dubbo job in the pre-release environment
                 # =====================================================================================================
-                with open("scripts/template_dubbo.xml", 'r') as config:
+                with open("scripts/jenkins/template_dubbo.xml", 'r') as config:
                     config = config.read()
                     config = config.replace("POINT_1", self.description)
                     config = config.replace("POINT_2", self.git_source)
                     config = config.replace("POINT_3", "./" + self.name)
                     config = config.replace("POINT_4", "target/*.war")
                     config = config.replace("POINT_5", "target")
-                with open("scripts/config.xml", 'w') as output:
+                with open("scripts/jenkins/config.xml", 'w') as output:
                     output.write(config)
                     info("write the config.xml successfully for " + self.name)
             elif self.arch == "nodejs":
                 # =====================================================================================================
                 # create the nodejs job in the pre-release environment
                 # =====================================================================================================
-                with open("scripts/template_nodejs.xml", 'r') as config:
+                with open("scripts/jenkins/template_nodejs.xml", 'r') as config:
                     config = config.read()
                     config = config.replace("POINT_1", self.description)
                     config = config.replace("POINT_2", self.git_source)
                     config = config.replace("POINT_3", self.name)
-                with open("scripts/config.xml", 'w') as output:
+                with open("scripts/jenkins/config.xml", 'w') as output:
                     output.write(config)
                     info("write the config.xml successfully for " + self.name)
             else:
                 warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
                 return None
-            command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
+            command = "bash scripts/jenkins/create_job.sh %s %s %s %s %s %s" % (
                 self._PRELEASE_JENKINS_URI,
                 self._PROD_JENKINS_USERNAME,
                 self._PROD_JENKINS_PASSWORD,
@@ -164,32 +164,32 @@ class Job:
                 # =====================================================================================================
                 # create the dubbo job in the gray environment
                 # =====================================================================================================
-                with open("scripts/template_dubbo.xml", 'r') as config:
+                with open("scripts/jenkins/template_dubbo.xml", 'r') as config:
                     config = config.read()
                     config = config.replace("POINT_1", self.description)
                     config = config.replace("POINT_2", self.git_source)
                     config = config.replace("POINT_3", "./" + self.name)
                     config = config.replace("POINT_4", "target/*.war")
                     config = config.replace("POINT_5", "target")
-                with open("scripts/config.xml", 'w') as output:
+                with open("scripts/jenkins/config.xml", 'w') as output:
                     output.write(config)
                     info("write the config.xml successfully for " + self.name)
             elif self.arch == "nodejs":
                 # =====================================================================================================
                 # create the nodejs job in the gray environment
                 # =====================================================================================================
-                with open("scripts/template_nodejs.xml", 'r') as config:
+                with open("scripts/jenkins/template_nodejs.xml", 'r') as config:
                     config = config.read()
                     config = config.replace("POINT_1", self.description)
                     config = config.replace("POINT_2", self.git_source)
                     config = config.replace("POINT_3", self.name)
-                with open("scripts/config.xml", 'w') as output:
+                with open("scripts/jenkins/config.xml", 'w') as output:
                     output.write(config)
                     info("write the config.xml successfully for " + self.name)
             else:
                 warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
                 return None
-            command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
+            command = "bash scripts/jenkins/create_job.sh %s %s %s %s %s %s" % (
                 self._GRAY_JENKINS_URI,
                 self._GRAY_JENKINS_USERNAME,
                 self._GRAY_JENKINS_PASSWORD,
@@ -202,32 +202,32 @@ class Job:
                 # =====================================================================================================
                 # create the dubbo job in the prod environment
                 # =====================================================================================================
-                with open("scripts/template_dubbo.xml", 'r') as config:
+                with open("scripts/jenkins/template_dubbo.xml", 'r') as config:
                     config = config.read()
                     config = config.replace("POINT_1", self.description)
                     config = config.replace("POINT_2", self.git_source)
                     config = config.replace("POINT_3", "./" + self.name)
                     config = config.replace("POINT_4", "target/*.war")
                     config = config.replace("POINT_5", "target")
-                with open("scripts/config.xml", 'w') as output:
+                with open("scripts/jenkins/config.xml", 'w') as output:
                     output.write(config)
                     info("write the config.xml successfully for " + self.name)
             elif self.arch == "nodejs":
                 # =====================================================================================================
                 # create the nodejs job in the prod environment
                 # =====================================================================================================
-                with open("scripts/template_nodejs.xml", 'r') as config:
+                with open("scripts/jenkins/template_nodejs.xml", 'r') as config:
                     config = config.read()
                     config = config.replace("POINT_1", self.description)
                     config = config.replace("POINT_2", self.git_source)
                     config = config.replace("POINT_3", self.name)
-                with open("scripts/config.xml", 'w') as output:
+                with open("scripts/jenkins/config.xml", 'w') as output:
                     output.write(config)
                     info("write the config.xml successfully for " + self.name)
             else:
                 warn("project architecture error, location to engineering.deploy_utils.Job.create_job")
                 return None
-            command = "bash scripts/create_job.sh %s %s %s %s %s %s" % (
+            command = "bash scripts/jenkins/create_job.sh %s %s %s %s %s %s" % (
                 self._PROD_JENKINS_URI,
                 self._PROD_JENKINS_USERNAME,
                 self._PROD_JENKINS_PASSWORD,
@@ -242,19 +242,19 @@ class Job:
 
     def build_job(self, env):
         if env == "test":
-            command = "bash scripts/build_job.sh %s %s %s %s" % (
+            command = "bash scripts/jenkins/build_job.sh %s %s %s %s" % (
                 self._TEST_JENKINS_URI, self._TEST_JENKINS_USERNAME, self._TEST_JENKINS_PASSWORD, self.name
             )
         elif env == "prelease":
-            command = "bash scripts/build_job.sh %s %s %s %s" % (
+            command = "bash scripts/jenkins/build_job.sh %s %s %s %s" % (
                 self._PRELEASE_JENKINS_URI, self._PRELEASE_JENKINS_USERNAME, self._PRELEASE_JENKINS_PASSWORD, self.name
             )
         elif env == "gray":
-            command = "bash scripts/build_job.sh %s %s %s %s" % (
+            command = "bash scripts/jenkins/build_job.sh %s %s %s %s" % (
                 self._GRAY_JENKINS_URI, self._GRAY_JENKINS_USERNAME, self._GRAY_JENKINS_PASSWORD, self.name
             )
         elif env == "prod":
-            command = "bash scripts/build_job.sh %s %s %s %s" % (
+            command = "bash scripts/jenkins/build_job.sh %s %s %s %s" % (
                 self._PROD_JENKINS_URI, self._PROD_JENKINS_USERNAME, self._PROD_JENKINS_PASSWORD, self.name
             )
         else:
@@ -267,7 +267,7 @@ class Job:
         this method could get the build console output data for us, by our times parameter
         """
         if env == "test":
-            command = "bash scripts/get_output.sh %s %s %s %s %s" % (
+            command = "bash scripts/jenkins/get_output.sh %s %s %s %s %s" % (
                 self._TEST_JENKINS_URI,
                 self._TEST_JENKINS_USERNAME,
                 self._TEST_JENKINS_PASSWORD,
@@ -275,7 +275,7 @@ class Job:
                 num
             )
         elif env == "prelease":
-            command = "bash scripts/get_output.sh %s %s %s %s %s" % (
+            command = "bash scripts/jenkins/get_output.sh %s %s %s %s %s" % (
                 self._PRELEASE_JENKINS_URI,
                 self._PRELEASE_JENKINS_USERNAME,
                 self._PRELEASE_JENKINS_PASSWORD,
@@ -283,7 +283,7 @@ class Job:
                 num
             )
         elif env == "gray":
-            command = "bash scripts/get_output.sh %s %s %s %s %s" % (
+            command = "bash scripts/jenkins/get_output.sh %s %s %s %s %s" % (
                 self._GRAY_JENKINS_URI,
                 self._GRAY_JENKINS_USERNAME,
                 self._GRAY_JENKINS_PASSWORD,
@@ -291,7 +291,7 @@ class Job:
                 num
             )
         elif env == "prod":
-            command = "bash scripts/get_output.sh %s %s %s %s %s" % (
+            command = "bash scripts/jenkins/get_output.sh %s %s %s %s %s" % (
                 self._PROD_JENKINS_URI,
                 self._PROD_JENKINS_USERNAME,
                 self._PROD_JENKINS_PASSWORD,
@@ -305,20 +305,40 @@ class Job:
 
     def delete_job(self, env):
         if env == "test":
-            command = "bash scripts/delete_job.sh %s %s %s %s" % (
-                self._TEST_JENKINS_URI, self._TEST_JENKINS_USERNAME, self._TEST_JENKINS_PASSWORD, self.name
+            command = "bash scripts/jenkins/delete_job.sh %s %s %s %s %s %s" % (
+                self._TEST_JENKINS_URI,
+                self._TEST_JENKINS_USERNAME,
+                self._TEST_JENKINS_PASSWORD,
+                self.name,
+                self._TEST_SYNC_USERNAME,
+                self._TEST_SYNC_ADDR
             )
         elif env == "prelease":
-            command = "bash scripts/delete_job.sh %s %s %s %s" % (
-                self._PRELEASE_JENKINS_URI, self._PRELEASE_JENKINS_USERNAME, self._PRELEASE_JENKINS_PASSWORD, self.name
+            command = "bash scripts/jenkins/delete_job.sh %s %s %s %s %s %s" % (
+                self._PRELEASE_JENKINS_URI,
+                self._PRELEASE_JENKINS_USERNAME,
+                self._PRELEASE_JENKINS_PASSWORD,
+                self.name,
+                self._PRELEASE_SYNC_USERNAME,
+                self._PRELEASE_SYNC_ADDR
             )
         elif env == "gray":
-            command = "bash scripts/delete_job.sh %s %s %s %s" % (
-                self._GRAY_JENKINS_URI, self._GRAY_JENKINS_USERNAME, self._GRAY_JENKINS_PASSWORD, self.name
+            command = "bash scripts/jenkins/delete_job.sh %s %s %s %s %s %s" % (
+                self._GRAY_JENKINS_URI,
+                self._GRAY_JENKINS_USERNAME,
+                self._GRAY_JENKINS_PASSWORD,
+                self.name,
+                self._GRAY_SYNC_USERNAME,
+                self._GRAY_SYNC_ADDR
             )
         elif env == "prod":
-            command = "bash scripts/delete_job.sh %s %s %s %s" % (
-                self._PROD_JENKINS_URI, self._PROD_JENKINS_USERNAME, self._PROD_JENKINS_PASSWORD, self.name
+            command = "bash scripts/jenkins/delete_job.sh %s %s %s %s %s %s" % (
+                self._PROD_JENKINS_URI,
+                self._PROD_JENKINS_USERNAME,
+                self._PROD_JENKINS_PASSWORD,
+                self.name,
+                self._PROD_SYNC_USERNAME,
+                self._PROD_SYNC_ADDR
             )
         else:
             warn("project architecture error, location to engineering.deploy_utils.Job.delete_job")
