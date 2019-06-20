@@ -139,7 +139,14 @@ def project(request):
             }
             return render(request, "engineering/project_edit.html", context)
         elif request.GET.get("delete") != None:
-            pass
+            job = Job(Project.objects.get(id=request.GET.get("delete")))
+            for index in ["test", "prelease", "gray", "prod"]:
+                try:
+                    job.delete_job(index)
+                except:
+                    warn("can not delete the jenkins job %s in %s env" % (job.name, index))
+            Project.objects.filter(id=request.GET.get("delete")).delete()
+            return HttpResponseRedirect(reverse("project"))
         else:
             projects = Project.objects.all()
             context = {
